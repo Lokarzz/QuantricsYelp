@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lokarz.kotlinbaseapp">
 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.lokarz.kotlinbaseapp.MainApplication"
         android:allowBackup="true"
@@ -10,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.lokarz.kotlinbaseapp.view.activites.SplashActivity">
+        <activity android:name="com.lokarz.kotlinbaseapp.view.activity.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

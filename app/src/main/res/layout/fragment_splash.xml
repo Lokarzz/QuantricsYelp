@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout>
-
     <data>
 
         <variable
@@ -14,8 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".view.activity.splash.SplashActivity">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_text"
@@ -25,7 +22,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{splashViewModel.title}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -40,15 +36,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:srcImg="@{splashViewModel.srcImg2}"/>
-
-        <FrameLayout
-            android:id="@+id/fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
 
     </LinearLayout>
 
