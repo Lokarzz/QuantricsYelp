@@ -44,8 +44,12 @@ android {
 
         debug {
             minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
 
@@ -87,5 +91,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:20.0.0'
 
 //    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    //workmanager
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
+
+    //rxpermission
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+
+    //rx java
+    implementation "io.reactivex.rxjava3:rxjava:3.0.12"
 
 }

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.ads.AdView
 import com.lokarz.kotlinbaseapp.R
 import com.lokarz.kotlinbaseapp.databinding.ActivitySplashBinding
+import com.lokarz.kotlinbaseapp.pedometer.Pedometer
+import com.lokarz.kotlinbaseapp.util.GsonUtil
 import com.lokarz.kotlinbaseapp.view.base.BaseActivity
 import com.lokarz.kotlinbaseapp.viewmodel.AdMobViewModel
 import com.lokarz.kotlinbaseapp.viewmodel.SplashViewModel
@@ -26,7 +29,7 @@ class SplashActivity : BaseActivity() {
     lateinit var et: AppCompatEditText;
     lateinit var adView: AdView;
 
-
+    lateinit var asdf : TextView;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,10 @@ class SplashActivity : BaseActivity() {
         initTestEditText()
         initAds()
 
+        Pedometer.start(this)
+        splashViewModel.title?.value = GsonUtil.getGsonString(Pedometer.getData(this))
+
+
 //        replaceFragment(SplashFragment.newInstance())
     }
 
@@ -56,8 +63,8 @@ class SplashActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                splashViewModel.title?.value = s.toString()
-                showReward()
+//                splashViewModel.title?.value = s.toString()
+//                showReward()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -71,7 +78,7 @@ class SplashActivity : BaseActivity() {
 
     }
 
-    fun showReward(){
+    fun showReward() {
         adMobViewModel.showReward(this) { rewardItem -> Log.w("rewardItem", rewardItem.toString()) }
     }
 
