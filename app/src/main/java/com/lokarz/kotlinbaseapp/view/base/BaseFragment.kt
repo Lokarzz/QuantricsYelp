@@ -1,6 +1,7 @@
 package com.lokarz.kotlinbaseapp.view.base
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import dagger.android.AndroidInjector
@@ -16,14 +17,19 @@ abstract class BaseFragment : Fragment(), HasAndroidInjector{
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any?>
 
-    protected lateinit var baseActivity: BaseActivity;
+    lateinit var baseActivity: BaseActivity;
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        baseActivity = context as BaseActivity;
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
-        baseActivity = context as BaseActivity;
     }
+
+
 
     override fun androidInjector(): AndroidInjector<Any?>? {
         return androidInjector

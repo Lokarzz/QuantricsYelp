@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="youtubeViewModel"
+            type="com.lokarz.kotlinbaseapp.viewmodel.YoutubeViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/motionLayout"
+            app:layoutDescription="@xml/youtube_scene">
+
+            <com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout
+                android:id="@+id/fl2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/ytpv2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:showFullScreenButton="false" />
+
+            </com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout>
+
+            <com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout
+                android:id="@+id/fl1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/ytpv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:showFullScreenButton="false" />
+
+            </com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout>
+
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+
+
+    </LinearLayout>
+
+</layout>

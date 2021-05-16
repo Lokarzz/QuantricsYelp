@@ -1,4 +1,4 @@
-package com.lokarz.kotlinbaseapp.view.fragment
+package com.lokarz.kotlinbaseapp.view.fragment.splash
 
 import android.content.Context
 import androidx.annotation.Nullable

@@ -2,18 +2,15 @@ package com.lokarz.kotlinbaseapp.view.base
 
 import android.content.Context
 import android.os.Bundle
-import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.lokarz.kotlinbaseapp.R
+import com.lokarz.kotlinbaseapp.util.FragmentUtil
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity()  {
+abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any?>;
@@ -23,7 +20,6 @@ abstract class BaseActivity : AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
-
         super.onCreate(savedInstanceState)
     }
 
@@ -31,29 +27,12 @@ abstract class BaseActivity : AppCompatActivity()  {
         return androidInjector
     }
 
-    fun replaceFragment(fragment: Fragment?, @IdRes container: Int = R.id.fragment) {
-        val fm = supportFragmentManager
-        try {
-            fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            val ft = fm.beginTransaction()
-            ft.replace(container, fragment!!)
-            ft.commit()
-        } catch (e: Exception) {
-            // no nothing
-        }
+    fun popFragment(baseFragment: BaseFragment, resId: Int) {
+        FragmentUtil.popFragment(supportFragmentManager, baseFragment, resId)
     }
 
-    open fun addFragment(fragment: Fragment?, @IdRes container: Int = R.id.fragment) {
-        val fm = supportFragmentManager
-        try {
-            val ft = fm.beginTransaction()
-            if (fragment != null) {
-                ft.replace(container, fragment)
-                ft.addToBackStack(fragment.javaClass.simpleName)
-                ft.commit()
-            }
-        } catch (e: java.lang.Exception) {
-            // no nothing
-        }
+    fun goToFragment(baseFragment: BaseFragment, resId: Int) {
+        FragmentUtil.goToFragment(supportFragmentManager, baseFragment, resId)
     }
+
 }

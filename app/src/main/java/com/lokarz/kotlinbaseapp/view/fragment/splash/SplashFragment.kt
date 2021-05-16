@@ -1,4 +1,4 @@
-package com.lokarz.kotlinbaseapp.view.fragment
+package com.lokarz.kotlinbaseapp.view.fragment.splash
 
 import android.os.Bundle
 import android.text.Editable
@@ -56,8 +56,6 @@ class SplashFragment : BaseFragment() {
 
         initAds()
         initEtText()
-
-
 
         return mView
     }

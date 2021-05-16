@@ -23,7 +23,11 @@ import com.lokarz.kotlinbaseapp.util.ParseUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/*
+Add this permission to your manifest
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+*/
 class PedometerWorker(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
 
