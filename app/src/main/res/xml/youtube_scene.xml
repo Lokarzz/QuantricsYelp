@@ -13,15 +13,15 @@
             app:touchAnchorSide="left"
             app:touchRegionId="@id/fl1" />
 
-        <KeyFrameSet>
+        <!--        <KeyFrameSet>-->
 
-            <KeyPosition
-                app:framePosition="50"
-                app:keyPositionType="pathRelative"
-                app:motionTarget="@id/fl1"
-                app:percentY="0.1" />
+        <!--            <KeyPosition-->
+        <!--                app:framePosition="50"-->
+        <!--                app:keyPositionType="pathRelative"-->
+        <!--                app:motionTarget="@id/fl1"-->
+        <!--                app:percentY="0.1" />-->
 
-        </KeyFrameSet>
+        <!--        </KeyFrameSet>-->
 
 
     </Transition>
@@ -46,19 +46,18 @@
         <OnSwipe
             app:dragDirection="dragRight"
             app:onTouchUp="autoComplete"
-            app:touchAnchorId="@id/fl1"
             app:touchAnchorSide="right"
             app:touchRegionId="@id/fl1" />
 
-        <KeyFrameSet>
+        <!--        <KeyFrameSet>-->
 
-            <KeyPosition
-                app:framePosition="50"
-                app:keyPositionType="pathRelative"
-                app:motionTarget="@id/fl1"
-                app:percentY="-0.1" />
+        <!--            <KeyPosition-->
+        <!--                app:framePosition="50"-->
+        <!--                app:keyPositionType="pathRelative"-->
+        <!--                app:motionTarget="@id/fl1"-->
+        <!--                app:percentY="-0.1" />-->
 
-        </KeyFrameSet>
+        <!--        </KeyFrameSet>-->
 
     </Transition>
 
@@ -77,7 +76,7 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint android:id="@id/fl1">
             <Layout
-                android:layout_width="270dp"
+                android:layout_width="0dp"
                 android:layout_height="424dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -87,16 +86,13 @@
 
         <Constraint android:id="@id/fl2">
             <Layout
-                android:layout_width="270dp"
+                android:layout_width="0dp"
                 android:layout_height="424dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Transform
-                android:scaleX="0.90"
-                android:scaleY="0.90" />
 
         </Constraint>
 
@@ -105,25 +101,21 @@
     <ConstraintSet android:id="@+id/unlike">
         <Constraint android:id="@id/fl1">
             <Layout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="300dp"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.8" />
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </Constraint>
 
         <Constraint android:id="@id/fl2">
             <Layout
-                android:layout_width="270dp"
+                android:layout_width="0dp"
                 android:layout_height="424dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <Transform
-                android:scaleX="1"
-                android:scaleY="1" />
         </Constraint>
     </ConstraintSet>
 
@@ -133,14 +125,8 @@
 
         <Constraint android:id="@id/fl1">
             <Layout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="500dp"
-                android:layout_marginBottom="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.7" />
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
 
         </Constraint>
 
@@ -157,26 +143,21 @@
     <ConstraintSet android:id="@+id/like">
         <Constraint android:id="@id/fl1">
             <Layout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="200dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="80dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.9" />
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </Constraint>
         <Constraint android:id="@id/fl2">
             <Layout
-                android:layout_width="270dp"
+                android:layout_width="0dp"
                 android:layout_height="424dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <Transform
-                android:scaleX="1"
-                android:scaleY="1" />
+
         </Constraint>
     </ConstraintSet>
 
@@ -186,13 +167,8 @@
 
         <Constraint android:id="@id/fl1">
             <Layout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="80dp"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.7" />
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
         </Constraint>
 
         <Constraint android:id="@id/fl2">
@@ -218,26 +194,26 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/fullScreen">
-        <Constraint android:id="@+id/fl1" >
+        <Constraint android:id="@+id/fl1">
             <Layout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </Constraint>
 
-        <Constraint android:id="@+id/fl2" android:alpha="0" >
+        <Constraint
+            android:id="@+id/fl2"
+            android:alpha="0">
             <Layout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </Constraint>
 
     </ConstraintSet>
