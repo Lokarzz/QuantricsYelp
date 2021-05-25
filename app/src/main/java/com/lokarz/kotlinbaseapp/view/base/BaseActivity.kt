@@ -2,6 +2,7 @@ package com.lokarz.kotlinbaseapp.view.base
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lokarz.kotlinbaseapp.util.FragmentUtil
 import dagger.android.AndroidInjection
@@ -33,6 +34,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun goToFragment(baseFragment: BaseFragment, resId: Int) {
         FragmentUtil.goToFragment(supportFragmentManager, baseFragment, resId)
+    }
+
+    fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
 }

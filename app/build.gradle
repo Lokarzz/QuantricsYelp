@@ -105,4 +105,7 @@ dependencies {
     //youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
+    //google
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
 }

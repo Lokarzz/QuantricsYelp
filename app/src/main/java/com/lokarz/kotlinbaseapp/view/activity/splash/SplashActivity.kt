@@ -1,6 +1,8 @@
 package com.lokarz.kotlinbaseapp.view.activity.splash
 
+import android.net.Uri
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.lokarz.kotlinbaseapp.R
 import com.lokarz.kotlinbaseapp.databinding.ActivitySplashBinding
@@ -27,10 +29,13 @@ class SplashActivity : BaseActivity() {
         activitySplashBinding.lifecycleOwner = this
 
         initViewModels()
-
         processLogin()
 
+
+
     }
+
+
 
     private fun initViewModels() {
         splashViewModel.init()
