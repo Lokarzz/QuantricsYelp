@@ -15,6 +15,14 @@ import com.lokarz.kotlinbaseapp.viewmodel.YoutubeViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
+import java.util.function.Consumer
 import javax.inject.Inject
 
 class YoutubeFragment() : BaseFragment() {
@@ -25,6 +33,7 @@ class YoutubeFragment() : BaseFragment() {
 
     var ytp1: YouTubePlayer? = null
     var ytp2: YouTubePlayer? = null
+    var ytpv1: YouTubePlayerView? = null;
 
     companion object {
         fun newInstance(): YoutubeFragment {
@@ -48,10 +57,15 @@ class YoutubeFragment() : BaseFragment() {
 
         mView = fragmentYoutubeBinding.root
 
+        initViewModel()
         initMotionLayout()
         initYtpv()
 
         return mView
+    }
+
+    private fun initViewModel() {
+        youtubeViewModel.init()
     }
 
     private fun initMotionLayout() {
@@ -72,34 +86,33 @@ class YoutubeFragment() : BaseFragment() {
 
     private fun checkOnReady() {
         if (ytp1 != null && ytp2 != null) {
-            updateData()
+            loadYoutubeCard()
         }
-//        Log.w("YoutubeFragment", "Observable")
-//        Observable.interval(500, TimeUnit.MILLISECONDS)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-////            .repeatUntil((BooleanSupplier { ytp1 != null && ytp2 != null }))
-//            .skipUntil( (ObservableSource<Any> { ytp1!= null && ytp2 != null}))
-//            .subscribe {
-//                updateData()
-//                Log.w("YoutubeFragment", "initOnReady")
-//            }
     }
 
     private fun onSwipe() {
-        updateData()
+        youtubeViewModel.updateYoutubeCard()
     }
 
-    private fun updateData() {
-        Log.w("YoutubeFragment", "updateData")
-        ytp1?.loadVideo("8hGGVW_mGEI", 0f)
-        ytp2?.cueVideo("cOrYjwAJnrk", 0f)
+    private fun loadYoutubeCard() {
+        youtubeViewModel.youtubeCard.observe(this, {
+            ytpv1?.visibility = View.INVISIBLE
+            ytp1?.loadVideo(it.firstCard?.videoId!!, 0f)
+            Observable.just(1).delay(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    ytpv1?.visibility = View.VISIBLE
+                    ytp2?.cueVideo(it.secondCard?.videoId!!, 0f)
+                }
+
+        })
     }
 
     private fun initYtpv() {
-        val ytpv1: YouTubePlayerView = mView.findViewById(R.id.ytpv1);
-        lifecycle.addObserver(ytpv1)
-        ytpv1.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+        ytpv1 = mView.findViewById(R.id.ytpv1)
+        lifecycle.addObserver(ytpv1!!)
+        ytpv1?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 ytp1 = youTubePlayer
                 checkOnReady()
@@ -112,7 +125,6 @@ class YoutubeFragment() : BaseFragment() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 ytp2 = youTubePlayer
                 checkOnReady()
-
             }
         })
     }

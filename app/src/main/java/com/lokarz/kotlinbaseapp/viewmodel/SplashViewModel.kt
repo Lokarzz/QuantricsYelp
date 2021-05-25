@@ -26,7 +26,7 @@ class SplashViewModel @Inject constructor(var iAppService: IAppService?) : ViewM
        Observable.just(1).subscribeOn(Schedulers.newThread())
            .observeOn(AndroidSchedulers.mainThread())
            .delay(1, TimeUnit.SECONDS)
-           .subscribe { _ -> loginStatus?.postValue("success") }
+           .subscribe { loginStatus?.postValue("success") }
     }
 
 }
