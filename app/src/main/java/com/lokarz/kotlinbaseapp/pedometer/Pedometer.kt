@@ -1,6 +1,7 @@
 package com.lokarz.kotlinbaseapp.pedometer
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class Pedometer {
         private const val KEY: String = "PEDOMETER_KEY"
         private const val PEDOMETER_FILE: String = "PEDOMETER_FILE"
 
+        @SuppressLint("InlinedApi")
         fun start(appCompatActivity: AppCompatActivity) {
             RxPermission.request(appCompatActivity, Manifest.permission.ACTIVITY_RECOGNITION)
                 .subscribeOn(Schedulers.newThread())
