@@ -7,16 +7,16 @@ android {
     signingConfigs {
         release {
             storeFile file('..\\keystore\\keystore.jks')
-            storePassword 'asdf1234'
+            storePassword 'lokarzgameforview'
             keyAlias 'key0'
-            keyPassword 'asdf1234'
+            keyPassword 'lokarzgameforview'
         }
     }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.lokarz.kotlinbaseapp"
+        applicationId "com.lokarz.gameforview"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

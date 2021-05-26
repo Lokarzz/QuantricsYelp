@@ -5,7 +5,7 @@
 
         <variable
             name="youtubeViewModel"
-            type="com.lokarz.kotlinbaseapp.viewmodel.YoutubeViewModel" />
+            type="com.lokarz.gameforview.viewmodel.YoutubeViewModel" />
 
     </data>
 
@@ -22,7 +22,7 @@
             android:id="@+id/motionLayout"
             app:layoutDescription="@xml/youtube_scene">
 
-            <com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout
+            <com.lokarz.gameforview.view.custom.CustomFrameLayout
                 android:id="@+id/fl2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -33,9 +33,9 @@
                     android:layout_height="match_parent"
                     app:showFullScreenButton="false" />
 
-            </com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout>
+            </com.lokarz.gameforview.view.custom.CustomFrameLayout>
 
-            <com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout
+            <com.lokarz.gameforview.view.custom.CustomFrameLayout
                 android:id="@+id/fl1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -46,7 +46,7 @@
                     android:layout_height="match_parent"
                     app:showFullScreenButton="false" />
 
-            </com.lokarz.kotlinbaseapp.view.custom.CustomFrameLayout>
+            </com.lokarz.gameforview.view.custom.CustomFrameLayout>
 
 
         </androidx.constraintlayout.motion.widget.MotionLayout>
