@@ -14,7 +14,7 @@ import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.FragmentSplashBinding
 import com.lokarz.gameforview.view.base.BaseFragment
 import com.lokarz.gameforview.viewmodel.AdMobViewModel
-import com.lokarz.gameforview.viewmodel.SplashViewModel
+import com.lokarz.gameforview.view.activity.splash.SplashViewModel
 import javax.inject.Inject
 
 class SplashFragment : BaseFragment() {
@@ -23,8 +23,8 @@ class SplashFragment : BaseFragment() {
     @Inject
     lateinit var splashViewModel: SplashViewModel;
 
-    @Inject
-    lateinit var adMobViewModel: AdMobViewModel
+//    @Inject
+//    lateinit var adMobViewModel: AdMobViewModel
 
     lateinit var adView: AdView;
 
@@ -52,35 +52,34 @@ class SplashFragment : BaseFragment() {
 
         mView = fragmentSplashBinding.root
 
-        splashViewModel.init()
 
-        initAds()
-        initEtText()
+//        initAds()
+//        initEtText()
 
         return mView
     }
 
-    fun initEtText() {
-        et = mView.findViewById(R.id.et_text)
-        et.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, aftaer: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                splashViewModel.title?.value = s.toString()
-                adMobViewModel.showReward(baseActivity) { rewardItem -> Log.w("rewardItem", rewardItem.toString()) }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-    }
-
-    fun initAds() {
-        adView = mView.findViewById(R.id.adView)
-        adView.loadAd(adMobViewModel.getAdRequest())
-
-    }
+//    fun initEtText() {
+//        et = mView.findViewById(R.id.et_text)
+//        et.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, aftaer: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                splashViewModel.title?.value = s.toString()
+//                adMobViewModel.showReward(baseActivity) { rewardItem -> Log.w("rewardItem", rewardItem.toString()) }
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//            }
+//        })
+//    }
+//
+//    fun initAds() {
+//        adView = mView.findViewById(R.id.adView)
+//        adView.loadAd(adMobViewModel.getAdRequest())
+//
+//    }
 
 
 }

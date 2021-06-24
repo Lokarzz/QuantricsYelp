@@ -1,5 +1,7 @@
 package com.lokarz.gameforview.dagger.module
 
+import com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity
+import com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeModule
 import com.lokarz.gameforview.view.activity.home.HomeActivity
 import com.lokarz.gameforview.view.activity.home.HomeActivityModule
 import com.lokarz.gameforview.view.activity.login.LoginActivity
@@ -21,7 +23,7 @@ abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [LoginActivityModule::class])
     abstract fun loginActivity(): LoginActivity
 
-
-
+    @ContributesAndroidInjector(modules = [AddYoutubeModule::class])
+    abstract fun addYoutubeActivity(): AddYoutubeActivity
 
 }

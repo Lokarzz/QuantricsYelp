@@ -2,38 +2,39 @@ package com.lokarz.gameforview.util
 
 import android.content.Context
 
-class PreferenceUtil {
+class PreferenceUtil(val context: Context) {
 
+    fun saveData(key: String?, value: String?, filename: String? = PREFERENCE_NAME) {
+        val editor = context.getSharedPreferences(
+            filename,
+            Context.MODE_PRIVATE
+        ).edit()
+        editor.putString(key, value)
+        editor.apply()
+    }
 
-    companion object {
-        private const val FILE_NAME = "Preferences"
+    fun readSavedData(key: String?, filename: String? = PREFERENCE_NAME): String? {
+        val sharedPreferences = context.getSharedPreferences(filename, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(
+            key,
+            ""
+        )
+    }
 
-
-
-
-        fun saveData( context: Context, key: String?, value: String?,filename: String? = FILE_NAME) {
-            val editor = context.getSharedPreferences(
+    fun clearSavedData(filename: String? = PREFERENCE_NAME) {
+        val editor =
+            context.getSharedPreferences(
                 filename,
                 Context.MODE_PRIVATE
             ).edit()
-            editor.putString(key, value)
-            editor.apply()
-        }
+        editor.clear()
+        editor.apply()
+    }
 
-        fun readSavedData( context: Context, key: String?, filename: String? = FILE_NAME): String? {
-            val sharedPreferences = context.getSharedPreferences(filename, Context.MODE_PRIVATE)
-            return sharedPreferences.getString(
-                key,
-                ""
-            )
-        }
 
-        fun clearSavedData(context: Context, filename: String? = FILE_NAME) {
-            val editor =
-                context.getSharedPreferences(filename,
-                    Context.MODE_PRIVATE).edit()
-            editor.clear()
-            editor.apply()
-        }
+    companion object {
+        private const val PREFERENCE_NAME = "com.lokarz.gameforview"
+
+
     }
 }

@@ -4,7 +4,7 @@
 
         <variable
             name="splashViewModel"
-            type="com.lokarz.gameforview.viewmodel.SplashViewModel" />
+            type="com.lokarz.gameforview.view.activity.splash.SplashViewModel" />
 
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

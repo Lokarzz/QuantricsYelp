@@ -1,16 +1,20 @@
 package com.lokarz.gameforview.dagger.component
 
 import com.lokarz.gameforview.MainApplication
+import com.lokarz.gameforview.api.ApiModule
 import com.lokarz.gameforview.dagger.module.ActivityBuildersModule
 import com.lokarz.gameforview.dagger.module.FragmentBuildersModule
-import com.lokarz.gameforview.dagger.module.retrofit.RetrofitModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 
 @Component(
-    modules = [AndroidInjectionModule::class, RetrofitModule::class, ActivityBuildersModule::class, FragmentBuildersModule::class]
+    modules = [
+        AndroidInjectionModule::class,
+        ApiModule::class,
+        ActivityBuildersModule::class,
+        FragmentBuildersModule::class]
 )
 interface ApplicationComponent : AndroidInjector<MainApplication> {
 

@@ -9,16 +9,16 @@ import java.lang.ref.WeakReference
 
 
 @Module
-abstract class BaseFragmentModule<T : Fragment> {
+abstract class BaseFragmentModule<T : BaseFragment> {
 
     @Provides
     fun provideViewModelStoreOwner(t: T): ViewModelStoreOwner {
-        return t;
+        return t
     }
 
     @Provides
     fun provideContext(t: T): Context? {
-        return t.context;
+        return t.baseActivity
     }
 
     @Provides

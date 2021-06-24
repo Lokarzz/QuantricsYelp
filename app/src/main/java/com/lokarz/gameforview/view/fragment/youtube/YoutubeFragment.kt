@@ -9,8 +9,8 @@ import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.databinding.DataBindingUtil
 import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.FragmentYoutubeBinding
+import com.lokarz.gameforview.util.AppListener
 import com.lokarz.gameforview.view.base.BaseFragment
-import com.lokarz.gameforview.viewmodel.YoutubeViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class YoutubeFragment() : BaseFragment() {
+class YoutubeFragment(val listener: Listener) : BaseFragment() {
 
 
     @Inject
@@ -30,9 +30,13 @@ class YoutubeFragment() : BaseFragment() {
     var ytp2: YouTubePlayer? = null
     var ytpv1: YouTubePlayerView? = null;
 
+    interface Listener {
+        fun onRefreshPoints()
+    }
+
     companion object {
-        fun newInstance(): YoutubeFragment {
-            return YoutubeFragment()
+        fun newInstance(listener: Listener): YoutubeFragment {
+            return YoutubeFragment(listener)
         }
     }
 
@@ -52,15 +56,19 @@ class YoutubeFragment() : BaseFragment() {
 
         mView = fragmentYoutubeBinding.root
 
-        initViewModel()
         initMotionLayout()
         initYtpv()
+        onPointsAdded()
 
         return mView
     }
 
-    private fun initViewModel() {
-        youtubeViewModel.init()
+    private fun onPointsAdded() {
+       youtubeViewModel.isPointsAdded.observe(viewLifecycleOwner, {
+           if (it == true){
+               listener.onRefreshPoints()
+           }
+       })
     }
 
     private fun initMotionLayout() {
@@ -82,7 +90,17 @@ class YoutubeFragment() : BaseFragment() {
     private fun checkOnReady() {
         if (ytp1 != null && ytp2 != null) {
             loadYoutubeCard()
+            addListener()
         }
+    }
+
+    private fun addListener() {
+        ytp1 ?: return
+        ytp1?.addListener(object : AppListener.AppYoutube() {
+            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+                youtubeViewModel.processPoints(second)
+            }
+        })
     }
 
     private fun onSwipe() {

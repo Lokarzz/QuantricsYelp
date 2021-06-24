@@ -1,11 +1,14 @@
 package com.lokarz.gameforview.view.activity.splash
 
+import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
-import com.lokarz.gameforview.dagger.module.retrofit.IAppService
+import com.lokarz.gameforview.api.retrofit.google.IGoogleService
+import com.lokarz.gameforview.util.PreferenceUtil
+import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
-import com.lokarz.gameforview.viewmodel.SplashViewModel
 import dagger.Module
 import dagger.Provides
 
@@ -13,18 +16,33 @@ import dagger.Provides
 @Module
 class SplashActivityModule : BaseActivityModule<SplashActivity>() {
 
+    @Provides
+    fun provide(context: Context) : RxGoogle {
+        return RxGoogle(context as AppCompatActivity)
+    }
 
 
     @Provides
-    fun provideFactory(iAppService: IAppService) : ViewModelProvider.Factory{
-        val splashViewModel = SplashViewModel(iAppService)
+    fun providePreferenceUtil(context: Context): PreferenceUtil {
+        return PreferenceUtil(context)
+    }
+
+    @Provides
+    fun provideFactory(iGoogleService: IGoogleService): ViewModelProvider.Factory {
+        val splashViewModel = SplashViewModel(iGoogleService)
         return ViewModelProviderFactory(splashViewModel);
     }
 
 
     @Provides
-    fun provideSplashViewModel(viewModelStoreOwner: ViewModelStoreOwner, viewModelProvider:ViewModelProvider.Factory): SplashViewModel {
-        return ViewModelProvider(viewModelStoreOwner, viewModelProvider).get(SplashViewModel::class.java)
+    fun provideSplashViewModel(
+        viewModelStoreOwner: ViewModelStoreOwner,
+        viewModelProvider: ViewModelProvider.Factory
+    ): SplashViewModel {
+        return ViewModelProvider(
+            viewModelStoreOwner,
+            viewModelProvider
+        ).get(SplashViewModel::class.java)
     }
 
 //    @Provides

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "547194736236",
+    "project_id": "game-for-view-1622003794301",
+    "storage_bucket": "game-for-view-1622003794301.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547194736236:android:ce31eb48f6b36268405249",
+        "android_client_info": {
+          "package_name": "com.lokarz.gameforview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547194736236-7atoqcrd44m20nh8g86amurg2brd22pr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lokarz.gameforview",
+            "certificate_hash": "2daf6a9470cb7654052c7f51cf6e02b6db64142d"
+          }
+        },
+        {
+          "client_id": "547194736236-68cgbg1oi2fe77j5v8mdsma0m3o6bh40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQQBAAuQUvW8c-I3BzmVsPilk47CgX6gU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547194736236-68cgbg1oi2fe77j5v8mdsma0m3o6bh40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

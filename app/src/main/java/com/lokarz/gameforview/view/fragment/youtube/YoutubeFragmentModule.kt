@@ -1,10 +1,13 @@
 package com.lokarz.gameforview.view.fragment.youtube
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.google.firebase.firestore.FirebaseFirestore
+import com.lokarz.gameforview.MainApplication
 import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
+import com.lokarz.gameforview.util.PreferenceUtil
 import com.lokarz.gameforview.view.base.BaseFragmentModule
-import com.lokarz.gameforview.viewmodel.YoutubeViewModel
 import dagger.Module
 import dagger.Provides
 
@@ -14,9 +17,14 @@ class YoutubeFragmentModule : BaseFragmentModule<YoutubeFragment>() {
 
 
     @Provides
-    fun provideFactory(): ViewModelProvider.Factory {
-        val viewModel = YoutubeViewModel()
-        return ViewModelProviderFactory(viewModel);
+    fun providePreferenceUtil(mainApplication: MainApplication): PreferenceUtil {
+        return PreferenceUtil(mainApplication)
+    }
+
+    @Provides
+    fun provideFactory(firebaseFirestore: FirebaseFirestore, preferenceUtil: PreferenceUtil): ViewModelProvider.Factory {
+        val viewModel = YoutubeViewModel(firebaseFirestore, preferenceUtil)
+        return ViewModelProviderFactory(viewModel)
     }
 
     @Provides

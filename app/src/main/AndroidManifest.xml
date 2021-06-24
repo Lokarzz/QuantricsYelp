@@ -3,17 +3,16 @@
     package="com.lokarz.gameforview">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:name="com.lokarz.gameforview.MainApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="true">
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -28,6 +27,8 @@
         </activity>
 
         <activity android:name="com.lokarz.gameforview.view.activity.home.HomeActivity"/>
+        <activity android:name="com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity"/>
+        <activity android:name="com.lokarz.gameforview.view.activity.login.LoginActivity"/>
 
     </application>
 

@@ -3,17 +3,26 @@ package com.lokarz.gameforview.view.activity.login
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.common.SignInButton
 import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.ActivityLoginBinding
 import com.lokarz.gameforview.util.ActivityUtil
-import com.lokarz.gameforview.util.RxLogin
+import com.lokarz.gameforview.util.GsonUtil
+import com.lokarz.gameforview.util.PreferenceUtil
+import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.activity.home.HomeActivity
 import com.lokarz.gameforview.view.base.BaseActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
 
+    @Inject
+    lateinit var rxGoogle: RxGoogle
+
+    @Inject
+    lateinit var preferenceUtil: PreferenceUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,25 +32,33 @@ class LoginActivity : BaseActivity() {
         )
         activityLoginBinding.lifecycleOwner = this
 
-        init()
         initGoogleLogin()
     }
 
-    private fun init() {
-    }
 
     fun initGoogleLogin() {
-        val loginButton: AppCompatButton = findViewById(R.id.google_sign_in)
+        val loginButton: SignInButton = findViewById(R.id.v_google_login)
+        loginButton.setSize(SignInButton.SIZE_STANDARD);
         loginButton.setOnClickListener {
-            RxLogin.googleLogin(this).subscribeOn(Schedulers.newThread())
+            rxGoogle.login().subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { success ->
                     if (success) {
-                        ActivityUtil.goToScreen(this, HomeActivity::class.java)
+                        storeData()
+                        ActivityUtil.gotoScreen(this, HomeActivity::class.java)
                     } else {
-                        showToast("Google Login Failed")
+                        showToast(getString(R.string.google_login_failed))
                     }
                 }
+        }
+    }
+
+    private fun storeData() {
+        rxGoogle.getData().subscribe { googleAccount ->
+            preferenceUtil.saveData(
+                googleAccount::class.simpleName,
+                GsonUtil.getGsonString(googleAccount)
+            )
         }
     }
 

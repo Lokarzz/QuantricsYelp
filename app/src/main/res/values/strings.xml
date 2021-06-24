@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">BaseApp</string>
+    <string name="app_name">Game For View</string>
+    <string name="google_login_failed">Google Login Failed</string>
+    <string name="open_drawer">open drawer</string>
+    <string name="close_drawer">close drawer</string>
+    <string name="game_points_hint_title">Ways to earn Gaming Points</string>
+    <string name="game_points_hint_message">- Watch videos and earn a gaming point for every minute
+        \n- Watch the full advertisement and earn 5 points
+    \n\nNote: Swipe left/right for next video</string>
+    <string name="google_login">Google Login</string>
 </resources>
