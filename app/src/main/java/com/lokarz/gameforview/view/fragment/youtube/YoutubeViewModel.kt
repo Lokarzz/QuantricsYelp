@@ -81,7 +81,7 @@ class YoutubeViewModel @Inject constructor(
             if (profileData == null) {
                 profileData = ProfileData()
             }
-            profileData.gamingPoints++
+            profileData.gamingPoints?.plus(1)
             preferenceUtil.saveData(
                 ProfileData::class.simpleName,
                 GsonUtil.getGsonString(profileData)

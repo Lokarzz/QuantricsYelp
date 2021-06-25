@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
-import com.lokarz.gameforview.api.retrofit.google.IGoogleService
+import com.lokarz.gameforview.model.repository.google.GoogleLocalRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRemoteRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRepository
+import com.lokarz.gameforview.util.Preference
 import com.lokarz.gameforview.util.PreferenceUtil
 import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
@@ -16,23 +19,33 @@ import dagger.Provides
 @Module
 class SplashActivityModule : BaseActivityModule<SplashActivity>() {
 
+
     @Provides
-    fun provide(context: Context) : RxGoogle {
+    fun provideRxGoogle(context: Context): RxGoogle {
         return RxGoogle(context as AppCompatActivity)
     }
 
-
-    @Provides
-    fun providePreferenceUtil(context: Context): PreferenceUtil {
-        return PreferenceUtil(context)
+    fun provideGoogleLocalRepository(preference: Preference): GoogleLocalRepository {
+        return GoogleLocalRepository(preference)
     }
 
     @Provides
-    fun provideFactory(iGoogleService: IGoogleService): ViewModelProvider.Factory {
-        val splashViewModel = SplashViewModel(iGoogleService)
+    fun provideGoogleRemoteRepository(rxGoogle: RxGoogle): GoogleRemoteRepository {
+        return GoogleRemoteRepository(rxGoogle)
+    }
+
+    @Provides
+    fun provideGoogleRepository(
+        googleRemoteRepository: GoogleRemoteRepository, googleLocalRepository: GoogleLocalRepository
+    ): GoogleRepository {
+        return GoogleRepository(googleLocalRepository, googleRemoteRepository)
+    }
+
+    @Provides
+    fun provideFactory(googleRepository: GoogleRepository): ViewModelProvider.Factory {
+        val splashViewModel = SplashViewModel(googleRepository)
         return ViewModelProviderFactory(splashViewModel);
     }
-
 
     @Provides
     fun provideSplashViewModel(
@@ -44,13 +57,4 @@ class SplashActivityModule : BaseActivityModule<SplashActivity>() {
             viewModelProvider
         ).get(SplashViewModel::class.java)
     }
-
-//    @Provides
-//    fun provideAdMobViewModel(viewModelStoreOwner: ViewModelStoreOwner, splashActivity: SplashActivity): AdMobViewModel {
-//        val adMobViewModel = ViewModelProvider(viewModelStoreOwner).get(AdMobViewModel::class.java)
-//        MobileAds.initialize(splashActivity) {}
-//        adMobViewModel.initReward(splashActivity)
-//        return adMobViewModel
-//    }
-
 }

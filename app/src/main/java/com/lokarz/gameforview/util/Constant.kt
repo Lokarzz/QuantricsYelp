@@ -23,7 +23,6 @@ class Constant {
             const val SOMETHING_WENT_WRONG = "something_went_wrong"
             const val REWARD_ALREADY_SHOWN = "reward_already_shown"
             const val NOT_ENOUGH_POINTS = "not_enough_points"
-
         }
     }
 

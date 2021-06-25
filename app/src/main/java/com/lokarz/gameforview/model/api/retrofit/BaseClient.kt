@@ -1,4 +1,4 @@
-package com.lokarz.gameforview.api.retrofit
+package com.lokarz.gameforview.model.api.retrofit
 
 import com.google.gson.GsonBuilder
 import com.lokarz.gameforview.BuildConfig

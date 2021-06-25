@@ -50,14 +50,18 @@ class HomeActivity : BaseActivity() {
         initNavigation()
         initFragment()
         initRewardItem()
+        initClickListener()
 
+
+    }
+
+    private fun initClickListener() {
         setNavigationOnClickListener(
             R.id.vg_add_youtube_video,
             R.id.iv_help,
             R.id.btn_watch_add,
             R.id.vg_logout
         )
-
     }
 
     private fun initRewardItem() {

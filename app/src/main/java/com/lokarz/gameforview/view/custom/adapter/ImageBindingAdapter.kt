@@ -1,4 +1,4 @@
-package com.lokarz.gameforview.adapter
+package com.lokarz.gameforview.view.custom.adapter
 
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter

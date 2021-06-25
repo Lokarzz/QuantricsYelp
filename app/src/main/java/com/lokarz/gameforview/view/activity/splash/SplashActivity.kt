@@ -15,15 +15,8 @@ import javax.inject.Inject
 
 class SplashActivity : BaseActivity() {
 
-
-    @Inject
-    lateinit var rxGoogle: RxGoogle
-
     @Inject
     lateinit var splashViewModel: SplashViewModel
-
-    @Inject
-    lateinit var preferenceUtil: PreferenceUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,26 +34,11 @@ class SplashActivity : BaseActivity() {
 
 
     private fun processLogin() {
-        rxGoogle.login()
-            .subscribe { isSuccess ->
-                if (isSuccess == true) {
-                    storeData()
-                    ActivityUtil.gotoScreen(this, HomeActivity::class.java)
-                } else {
-                    finish()
-                    showToast(getString(R.string.google_login_failed))
-                }
+        splashViewModel.googleLogin().observe(this) {
+            if (it == true) {
+                ActivityUtil.gotoScreen(this, HomeActivity::class.java)
             }
-    }
-
-    private fun storeData() {
-        rxGoogle.getData().subscribe { googleAccount ->
-            preferenceUtil.saveData(
-                GoogleAccount::class.simpleName,
-                GsonUtil.getGsonString(googleAccount)
-            )
         }
     }
-
 
 }

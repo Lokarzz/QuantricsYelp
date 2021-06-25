@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
+import com.lokarz.gameforview.model.repository.google.GoogleLocalRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRemoteRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRepository
+import com.lokarz.gameforview.model.repository.profile.LocalProfileRepository
+import com.lokarz.gameforview.model.repository.profile.ProfileRepository
+import com.lokarz.gameforview.util.Preference
 import com.lokarz.gameforview.util.PreferenceUtil
 import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
@@ -18,21 +24,35 @@ import javax.inject.Named
 class HomeActivityModule : BaseActivityModule<HomeActivity>() {
 
     @Provides
-    fun provide(context: Context): RxGoogle {
-        return RxGoogle(context as AppCompatActivity)
+    fun providedLocalProfileRepository(preference: Preference): LocalProfileRepository {
+        return LocalProfileRepository(preference)
     }
 
     @Provides
-    fun providePreferenceUtil(context: Context): PreferenceUtil {
-        return PreferenceUtil(context)
+    fun provideProfileRepository(localProfileRepository: LocalProfileRepository): ProfileRepository {
+        return ProfileRepository(localProfileRepository)
+    }
+
+    @Provides
+    fun provideRxGoogle(context: Context): RxGoogle {
+        return RxGoogle(context as AppCompatActivity)
+    }
+
+    fun provideGoogleLocalRepository(preference: Preference): GoogleLocalRepository {
+        return GoogleLocalRepository(preference)
+    }
+
+    @Provides
+    fun provideGoogleRemoteRepository(rxGoogle: RxGoogle): GoogleRemoteRepository {
+        return GoogleRemoteRepository(rxGoogle)
     }
 
     @Provides
     fun provideFactory(
-        preferenceUtil: PreferenceUtil,
-        rxGoogle: RxGoogle
+        profileRepository: ProfileRepository,
+        googleRepository: GoogleRepository
     ): ViewModelProvider.Factory {
-        val homeViewModel = HomeViewModel(preferenceUtil, rxGoogle)
+        val homeViewModel = HomeViewModel(profileRepository, googleRepository)
         return ViewModelProviderFactory(homeViewModel);
     }
 

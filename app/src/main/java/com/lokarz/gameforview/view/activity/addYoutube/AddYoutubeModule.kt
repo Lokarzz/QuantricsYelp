@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.google.firebase.firestore.FirebaseFirestore
-import com.lokarz.gameforview.api.retrofit.google.IGoogleService
+import com.lokarz.gameforview.model.api.retrofit.youtube.IYoutubeService
 import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
 import com.lokarz.gameforview.util.PreferenceUtil
 import com.lokarz.gameforview.view.base.BaseActivityModule
@@ -24,9 +24,9 @@ class AddYoutubeModule : BaseActivityModule<AddYoutubeActivity>() {
     fun provideFactory(
         firebaseFirestore: FirebaseFirestore,
         preferenceUtil: PreferenceUtil,
-        iGoogleService: IGoogleService
+        iYoutubeService: IYoutubeService
     ): ViewModelProvider.Factory {
-        val addYoutubeViewModel = AddYoutubeViewModel(firebaseFirestore, preferenceUtil, iGoogleService)
+        val addYoutubeViewModel = AddYoutubeViewModel(firebaseFirestore, preferenceUtil, iYoutubeService)
         return ViewModelProviderFactory(addYoutubeViewModel)
     }
 

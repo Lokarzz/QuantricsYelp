@@ -5,7 +5,7 @@ import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import com.lokarz.gameforview.api.retrofit.google.IGoogleService
+import com.lokarz.gameforview.model.api.retrofit.youtube.IYoutubeService
 import com.lokarz.gameforview.pojo.google.GoogleAccount
 import com.lokarz.gameforview.pojo.profile.ProfileData
 import com.lokarz.gameforview.pojo.youtube.YoutubeData
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class AddYoutubeViewModel @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
     private val preferenceUtil: PreferenceUtil,
-    private val iGoogleService: IGoogleService
+    private val iYoutubeService: IYoutubeService
 ) : ViewModel() {
 
     val currentPoints: MutableLiveData<String> = MutableLiveData()
@@ -60,7 +60,7 @@ class AddYoutubeViewModel @Inject constructor(
             profileData = ProfileData()
         }
 
-        return profileData.gamingPoints >= 5
+        return profileData.gamingPoints!! >= 5
     }
 
 
@@ -75,7 +75,7 @@ class AddYoutubeViewModel @Inject constructor(
     fun decreasePoints() {
         val profileData = GsonUtil.getGson(preferenceUtil, ProfileData::class.java)
         profileData ?: return
-        profileData.gamingPoints -= 5
+        profileData.gamingPoints?.minus(5)
         preferenceUtil.saveData(profileData::class.simpleName, GsonUtil.getGsonString(profileData))
         currentPoints.value = "Game Points: ${profileData.gamingPoints}"
 
@@ -120,7 +120,7 @@ class AddYoutubeViewModel @Inject constructor(
         return Single.create {
 
             val url = "http://www.youtube.com/watch?v=$id"
-            iGoogleService.getVideoDetail(url).enqueue(object : Callback<VideoDetailResponse> {
+            iYoutubeService.getVideoDetail(url).enqueue(object : Callback<VideoDetailResponse> {
                 override fun onResponse(
                     call: Call<VideoDetailResponse>,
                     response: Response<VideoDetailResponse>

@@ -31,6 +31,17 @@ class GsonUtil {
             return `object`
         }
 
+        fun <T> getGson(preference: Preference, clazz: Class<T>?): T? {
+            val gson = Gson()
+            var `object`: T? = null
+            try {
+                `object` = gson.fromJson(preference.readSavedData(clazz?.simpleName), clazz)
+            } catch (e: Exception) {
+                // do nothing
+            }
+            return `object`
+        }
+
 
         fun <T> getGson(intent: Intent, clazz: Class<T>): T? {
             val gson = Gson()

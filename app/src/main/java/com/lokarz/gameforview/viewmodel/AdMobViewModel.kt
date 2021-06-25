@@ -53,8 +53,6 @@ class AdMobViewModel(context: Context) : ViewModel() {
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
                 rewardItem.postValue(Constant.Error.REWARD_ALREADY_SHOWN)
-
-
             }
 
             override fun onAdShowedFullScreenContent() {

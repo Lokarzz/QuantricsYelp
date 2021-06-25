@@ -2,8 +2,9 @@ package com.lokarz.gameforview.util
 
 import android.content.Context
 import io.reactivex.rxjava3.core.Single
+import java.lang.Exception
 
-class PreferenceUtil(val context: Context) {
+class Preference(val context: Context) {
 
     fun saveDataRx(
         key: String?,
@@ -11,14 +12,20 @@ class PreferenceUtil(val context: Context) {
         filename: String? = PREFERENCE_NAME
     ): Single<Boolean> {
         return Single.create {
-            val editor = context.getSharedPreferences(
-                filename,
-                Context.MODE_PRIVATE
-            ).edit()
-            editor.putString(key, value)
-            editor.apply()
 
-            it.onSuccess(true)
+            try {
+                val editor = context.getSharedPreferences(
+                    filename,
+                    Context.MODE_PRIVATE
+                ).edit()
+                editor.putString(key, value)
+                editor.apply()
+
+                it.onSuccess(true)
+            } catch (e: Exception) {
+                it.onError(Throwable(e.message))
+            }
+
         }
     }
 
@@ -52,20 +59,26 @@ class PreferenceUtil(val context: Context) {
 
     }
 
-    fun clearSavedData(filename: String? = PREFERENCE_NAME) {
-        val editor =
-            context.getSharedPreferences(
-                filename,
-                Context.MODE_PRIVATE
-            ).edit()
-        editor.clear()
-        editor.apply()
-    }
+    fun clearData(key: String?, filename: String? = PREFERENCE_NAME): Single<Boolean> {
+        return Single.create {
+            val editor =
+                context.getSharedPreferences(
+                    filename,
+                    Context.MODE_PRIVATE
+                ).edit()
+            if (key != null) {
+                editor.remove(key)
+            } else {
+                editor.clear()
+            }
+            editor.apply()
+            it.onSuccess(true)
+        }
 
+    }
 
     companion object {
         private const val PREFERENCE_NAME = "com.lokarz.gameforview"
-
 
     }
 }

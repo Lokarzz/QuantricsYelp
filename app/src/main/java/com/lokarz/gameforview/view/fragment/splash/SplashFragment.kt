@@ -20,8 +20,8 @@ import javax.inject.Inject
 class SplashFragment : BaseFragment() {
 
 
-    @Inject
-    lateinit var splashViewModel: SplashViewModel;
+//    @Inject
+//    lateinit var splashViewModel: SplashViewModel;
 
 //    @Inject
 //    lateinit var adMobViewModel: AdMobViewModel
@@ -47,7 +47,7 @@ class SplashFragment : BaseFragment() {
             container,
             false
         )
-        fragmentSplashBinding.splashViewModel = splashViewModel
+//        fragmentSplashBinding.splashViewModel = splashViewModel
         fragmentSplashBinding.lifecycleOwner = this
 
         mView = fragmentSplashBinding.root
