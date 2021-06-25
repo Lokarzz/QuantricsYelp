@@ -8,9 +8,10 @@ import com.google.android.gms.common.api.ApiException
 import com.lokarz.gameforview.pojo.google.GoogleAccount
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleEmitter
+import javax.inject.Inject
 
 
-class RxGoogle(private var appCompatActivity: AppCompatActivity) {
+class RxGoogle @Inject constructor(private var appCompatActivity: AppCompatActivity) {
 
     private var singleEmitter: SingleEmitter<Boolean>? = null
 

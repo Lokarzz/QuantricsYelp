@@ -11,8 +11,10 @@ import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.FragmentYoutubeBinding
 import com.lokarz.gameforview.util.AppListener
 import com.lokarz.gameforview.view.base.BaseFragment
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -28,7 +30,8 @@ class YoutubeFragment(val listener: Listener) : BaseFragment() {
 
     var ytp1: YouTubePlayer? = null
     var ytp2: YouTubePlayer? = null
-    var ytpv1: YouTubePlayerView? = null;
+    var ytpv1: YouTubePlayerView? = null
+    var motionLayout: MotionLayout? = null
 
     interface Listener {
         fun onRefreshPoints()
@@ -64,17 +67,16 @@ class YoutubeFragment(val listener: Listener) : BaseFragment() {
     }
 
     private fun onPointsAdded() {
-       youtubeViewModel.isPointsAdded.observe(viewLifecycleOwner, {
-           if (it == true){
-               listener.onRefreshPoints()
-           }
-       })
+        youtubeViewModel.isPointsAdded.observe(viewLifecycleOwner, {
+            if (it == true) {
+                listener.onRefreshPoints()
+            }
+        })
     }
 
     private fun initMotionLayout() {
-        val motionLayout: MotionLayout = mView.findViewById(R.id.motionLayout)
-        motionLayout.setTransitionListener(object : TransitionAdapter() {
-
+        motionLayout = mView.findViewById(R.id.motionLayout)
+        motionLayout?.setTransitionListener(object : TransitionAdapter() {
             override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                 when (currentId) {
                     R.id.offScreenUnlike, R.id.offScreenLike -> {
@@ -96,9 +98,25 @@ class YoutubeFragment(val listener: Listener) : BaseFragment() {
 
     private fun addListener() {
         ytp1 ?: return
+        val youTubePlayerTracker = YouTubePlayerTracker()
+        youTubePlayerTracker.state
         ytp1?.addListener(object : AppListener.AppYoutube() {
             override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
                 youtubeViewModel.processPoints(second)
+            }
+
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                when (state) {
+                    PlayerConstants.PlayerState.ENDED -> {
+                        motionLayout?.transitionToEnd()
+                    }
+                    else -> {
+                        // do nothing
+                    }
+                }
             }
         })
     }

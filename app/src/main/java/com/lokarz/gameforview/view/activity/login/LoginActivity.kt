@@ -19,10 +19,7 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity() {
 
     @Inject
-    lateinit var rxGoogle: RxGoogle
-
-    @Inject
-    lateinit var preferenceUtil: PreferenceUtil
+    lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,25 +37,13 @@ class LoginActivity : BaseActivity() {
         val loginButton: SignInButton = findViewById(R.id.v_google_login)
         loginButton.setSize(SignInButton.SIZE_STANDARD);
         loginButton.setOnClickListener {
-            rxGoogle.login().subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { success ->
-                    if (success) {
-                        storeData()
-                        ActivityUtil.gotoScreen(this, HomeActivity::class.java)
-                    } else {
-                        showToast(getString(R.string.google_login_failed))
-                    }
+            loginViewModel.googleLogin().observe(this) {
+                if (it == true) {
+                    ActivityUtil.gotoScreen(this, HomeActivity::class.java)
+                } else {
+                    showToast(getString(R.string.google_login_failed))
                 }
-        }
-    }
-
-    private fun storeData() {
-        rxGoogle.getData().subscribe { googleAccount ->
-            preferenceUtil.saveData(
-                googleAccount::class.simpleName,
-                GsonUtil.getGsonString(googleAccount)
-            )
+            }
         }
     }
 

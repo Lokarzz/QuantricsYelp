@@ -1,4 +1,4 @@
-package com.lokarz.gameforview.view.activity.splash
+package com.lokarz.gameforview.view.activity.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
-class SplashViewModel @Inject constructor(private var googleRepository: GoogleRepository) :
+class LoginViewModel @Inject constructor(private var googleRepository: GoogleRepository) :
     ViewModel() {
 
     fun googleLogin(): MutableLiveData<Boolean> {

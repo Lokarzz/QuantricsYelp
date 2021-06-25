@@ -8,10 +8,9 @@ import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
 import com.lokarz.gameforview.model.repository.google.GoogleLocalRepository
 import com.lokarz.gameforview.model.repository.google.GoogleRemoteRepository
 import com.lokarz.gameforview.model.repository.google.GoogleRepository
-import com.lokarz.gameforview.model.repository.profile.LocalProfileRepository
+import com.lokarz.gameforview.model.repository.profile.ProfileLocalRepository
 import com.lokarz.gameforview.model.repository.profile.ProfileRepository
 import com.lokarz.gameforview.util.Preference
-import com.lokarz.gameforview.util.PreferenceUtil
 import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
 import com.lokarz.gameforview.viewmodel.AdMobViewModel
@@ -24,13 +23,13 @@ import javax.inject.Named
 class HomeActivityModule : BaseActivityModule<HomeActivity>() {
 
     @Provides
-    fun providedLocalProfileRepository(preference: Preference): LocalProfileRepository {
-        return LocalProfileRepository(preference)
+    fun providedLocalProfileRepository(preference: Preference): ProfileLocalRepository {
+        return ProfileLocalRepository(preference)
     }
 
     @Provides
-    fun provideProfileRepository(localProfileRepository: LocalProfileRepository): ProfileRepository {
-        return ProfileRepository(localProfileRepository)
+    fun provideProfileRepository(profileLocalRepository: ProfileLocalRepository): ProfileRepository {
+        return ProfileRepository(profileLocalRepository)
     }
 
     @Provides
@@ -45,6 +44,14 @@ class HomeActivityModule : BaseActivityModule<HomeActivity>() {
     @Provides
     fun provideGoogleRemoteRepository(rxGoogle: RxGoogle): GoogleRemoteRepository {
         return GoogleRemoteRepository(rxGoogle)
+    }
+
+    @Provides
+    fun provideGoogleRepository(
+        googleLocalRepository: GoogleLocalRepository,
+        googleRemoteRepository: GoogleRemoteRepository
+    ): GoogleRepository {
+        return GoogleRepository(googleLocalRepository, googleRemoteRepository)
     }
 
     @Provides

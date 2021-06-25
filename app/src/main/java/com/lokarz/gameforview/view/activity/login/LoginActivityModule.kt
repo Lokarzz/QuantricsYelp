@@ -2,7 +2,13 @@ package com.lokarz.gameforview.view.activity.login
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import com.lokarz.gameforview.util.PreferenceUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import com.lokarz.gameforview.dagger.factory.ViewModelProviderFactory
+import com.lokarz.gameforview.model.repository.google.GoogleLocalRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRemoteRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRepository
+import com.lokarz.gameforview.util.Preference
 import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
 import dagger.Module
@@ -13,25 +19,42 @@ import dagger.Provides
 class LoginActivityModule : BaseActivityModule<LoginActivity>() {
 
     @Provides
-    fun providePreferenceUtil(context: Context): PreferenceUtil {
-        return PreferenceUtil(context)
-    }
-
-    @Provides
-    fun provide(context: Context) : RxGoogle {
+    fun provideRxGoogle(context: Context): RxGoogle {
         return RxGoogle(context as AppCompatActivity)
     }
 
-//    @Provides
-//    fun provideFactory(iAppService: IAppService) : ViewModelProvider.Factory{
-//        val splashViewModel = SplashViewModel(iAppService)
-//        return ViewModelProviderFactory(splashViewModel);
-//    }
-//
-//    @Provides
-//    fun provideSplashViewModel(viewModelStoreOwner: ViewModelStoreOwner, viewModelProvider:ViewModelProvider.Factory): SplashViewModel {
-//        return ViewModelProvider(viewModelStoreOwner, viewModelProvider).get(SplashViewModel::class.java)
-//    }
+    fun provideGoogleLocalRepository(preference: Preference): GoogleLocalRepository {
+        return GoogleLocalRepository(preference)
+    }
+
+    @Provides
+    fun provideGoogleRemoteRepository(rxGoogle: RxGoogle): GoogleRemoteRepository {
+        return GoogleRemoteRepository(rxGoogle)
+    }
+
+    @Provides
+    fun provideGoogleRepository(
+        googleRemoteRepository: GoogleRemoteRepository, googleLocalRepository: GoogleLocalRepository
+    ): GoogleRepository {
+        return GoogleRepository(googleLocalRepository, googleRemoteRepository)
+    }
+
+    @Provides
+    fun provideFactory(googleRepository: GoogleRepository): ViewModelProvider.Factory {
+        val loginViewModel = LoginViewModel(googleRepository)
+        return ViewModelProviderFactory(loginViewModel);
+    }
+
+    @Provides
+    fun provideSplashViewModel(
+        viewModelStoreOwner: ViewModelStoreOwner,
+        viewModelProvider: ViewModelProvider.Factory
+    ): LoginViewModel {
+        return ViewModelProvider(
+            viewModelStoreOwner,
+            viewModelProvider
+        ).get(LoginViewModel::class.java)
+    }
 
 
 }

@@ -19,10 +19,10 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideService(): IYoutubeService {
-        val googleClient = YoutubeClient()
+    fun provideYoutubeService(): IYoutubeService {
+        val youtubeClient = YoutubeClient()
 
-        return googleClient.service!!
+        return youtubeClient.service!!
     }
 
     @Provides

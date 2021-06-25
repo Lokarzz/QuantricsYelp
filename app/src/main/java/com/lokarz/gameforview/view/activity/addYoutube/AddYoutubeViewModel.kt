@@ -6,6 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.lokarz.gameforview.model.api.retrofit.youtube.IYoutubeService
+import com.lokarz.gameforview.model.repository.firebase.FirebaseRepository
+import com.lokarz.gameforview.model.repository.google.GoogleRepository
+import com.lokarz.gameforview.model.repository.profile.ProfileRepository
+import com.lokarz.gameforview.model.repository.youtube.YoutubeRepository
 import com.lokarz.gameforview.pojo.google.GoogleAccount
 import com.lokarz.gameforview.pojo.profile.ProfileData
 import com.lokarz.gameforview.pojo.youtube.YoutubeData
@@ -14,7 +18,10 @@ import com.lokarz.gameforview.pojo.youtube.videoDetail.VideoDetailResponse
 import com.lokarz.gameforview.util.Constant
 import com.lokarz.gameforview.util.GsonUtil
 import com.lokarz.gameforview.util.PreferenceUtil
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,94 +29,73 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 class AddYoutubeViewModel @Inject constructor(
-    private val firebaseFirestore: FirebaseFirestore,
-    private val preferenceUtil: PreferenceUtil,
-    private val iYoutubeService: IYoutubeService
+    private val youtubeRepository: YoutubeRepository,
+    private val firebaseRepository: FirebaseRepository,
+    private val profileRepository: ProfileRepository,
+    googleRepository: GoogleRepository
 ) : ViewModel() {
 
     val currentPoints: MutableLiveData<String> = MutableLiveData()
+    private var profileData: ProfileData? = null
+    private var googleAccount: GoogleAccount? = null
 
     init {
         processProfileData()
+        googleRepository.getData().subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.newThread())
+            .subscribe { data ->
+                googleAccount = data
+            }
     }
 
-    var googleAccount: GoogleAccount? = GsonUtil.getGson(
-        preferenceUtil.readSavedData(GoogleAccount::class.simpleName),
-        GoogleAccount::class.java
-    )
-
-    private fun getReviewCollection(): Single<YoutubeResponse> {
-        return Single.create { source ->
-            firebaseFirestore.collection(Constant.Firestore.VIDEOS_COLLECTION)
-                .document(Constant.Firestore.REVIEW_DOCUMENT)
-                .get()
-                .addOnSuccessListener {
-                    var youtubeResponse = GsonUtil.getGson(it.data, YoutubeResponse::class.java)
-                    if (youtubeResponse == null) {
-                        youtubeResponse = YoutubeResponse()
-                        youtubeResponse.data = ArrayList()
-                    }
-                    source.onSuccess(youtubeResponse)
-                }
-        }
-    }
+    private infix fun <T : Comparable<T>> T?.isGreaterThanOrEqualTo(other: T?): Boolean =
+        if (this != null && other != null) this > other else false
 
     private fun hasEnoughPoints(): Boolean {
-        var profileData = GsonUtil.getGson(preferenceUtil, ProfileData::class.java)
-        if (profileData == null) {
-            profileData = ProfileData()
-        }
-
-        return profileData.gamingPoints!! >= 5
+        return profileData?.gamingPoints isGreaterThanOrEqualTo 5
     }
 
-
-    fun processProfileData() {
-        var profileData = GsonUtil.getGson(preferenceUtil, ProfileData::class.java)
-        if (profileData == null) {
-            profileData = ProfileData()
-        }
-        currentPoints.value = "Game Points: ${profileData.gamingPoints}"
+    private fun processProfileData() {
+        profileRepository.getProfile().subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { data ->
+                profileData = data
+                currentPoints.value = "Game Points: ${profileData?.gamingPoints}"
+            }
     }
 
-    fun decreasePoints() {
-        val profileData = GsonUtil.getGson(preferenceUtil, ProfileData::class.java)
-        profileData ?: return
-        profileData.gamingPoints?.minus(5)
-        preferenceUtil.saveData(profileData::class.simpleName, GsonUtil.getGsonString(profileData))
-        currentPoints.value = "Game Points: ${profileData.gamingPoints}"
+    private fun decreasePoints() {
+        profileRepository.decreasePoints(5).subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.newThread())
+            .subscribe { _ ->
+                refreshProfile()
+            }
+    }
 
+    private fun refreshProfile() {
+        processProfileData()
     }
 
 
     fun addYoutubeVideoId(youtubeData: YoutubeData): MutableLiveData<String> {
         val mutableLiveData = MutableLiveData<String>()
+
         if (hasEnoughPoints()) {
             youtubeData.googleAccount = googleAccount
-            isValidId(youtubeData.videoId).subscribe { result ->
+            isValidId(youtubeData.videoId).subscribe({ result ->
                 if (result == true) {
-                    getReviewCollection().subscribe { youtubeResponse ->
-                        val data = youtubeResponse.data
-                        if (data?.any { it.videoId == youtubeData.videoId } == false) {
-                            data.add(youtubeData)
-                            firebaseFirestore.collection(Constant.Firestore.VIDEOS_COLLECTION)
-                                .document(Constant.Firestore.REVIEW_DOCUMENT)
-                                .set(youtubeResponse)
-                                .addOnCompleteListener {
-                                    mutableLiveData.postValue(Constant.Success.VALID_ID)
-                                    decreasePoints()
-                                }
-                                .addOnFailureListener {
-                                    mutableLiveData.postValue(Constant.Error.SOMETHING_WENT_WRONG)
-                                }
-                        } else {
-                            mutableLiveData.postValue(Constant.Error.ID_ALREADY_ADDED)
-                        }
-                    }
-                } else {
-                    mutableLiveData.postValue(Constant.Error.INVALID_ID)
+                    firebaseRepository.addVideo(youtubeData).subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            mutableLiveData.postValue(Constant.Success.VALID_ID)
+                            decreasePoints()
+                        }, { error ->
+                            mutableLiveData.postValue(error.message)
+                        })
                 }
-            }
+            }, { error ->
+                mutableLiveData.postValue(error.message)
+            })
         } else {
             mutableLiveData.postValue(Constant.Error.NOT_ENOUGH_POINTS)
         }
@@ -120,26 +106,18 @@ class AddYoutubeViewModel @Inject constructor(
         return Single.create {
 
             val url = "http://www.youtube.com/watch?v=$id"
-            iYoutubeService.getVideoDetail(url).enqueue(object : Callback<VideoDetailResponse> {
-                override fun onResponse(
-                    call: Call<VideoDetailResponse>,
-                    response: Response<VideoDetailResponse>
-                ) {
-                    val body = response.body()
-                    it.onSuccess(body != null)
-                }
-
-                override fun onFailure(call: Call<VideoDetailResponse>, t: Throwable) {
-                    it.onSuccess(false)
-
-                }
-
-
-            })
+            youtubeRepository.getVideoDetail(url).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    it.onSuccess(response != null)
+                }, { _ ->
+                    it.onError(Throwable(Constant.Error.INVALID_ID))
+                })
         }
     }
 
-    fun String.isValidUrl(): Boolean = Patterns.WEB_URL.matcher(this).matches()
+    private fun String.isValidUrl(): Boolean = Patterns.WEB_URL.matcher(this).matches()
+
     fun getVideoId(id: String): String {
         var ret = id
         if (id.isValidUrl()) {

@@ -10,8 +10,8 @@ class ImageBindingAdapter {
     companion object{
         @JvmStatic
         @BindingAdapter("srcImg")
-        fun loadImage(appCompatImageView: AppCompatImageView, srcImg: String) {
-            if (srcImg.isNotEmpty()){
+        fun loadImage(appCompatImageView: AppCompatImageView?, srcImg: String?) {
+            if (!srcImg.isNullOrEmpty() && appCompatImageView != null) {
                 Glide.with(appCompatImageView.context)
                     .load(srcImg)
                     .into(appCompatImageView)
@@ -19,13 +19,19 @@ class ImageBindingAdapter {
         }
 
         @JvmStatic
-        @BindingAdapter("srcImgFragment" , "fragment")
-        fun loadImageFragment(appCompatImageView: AppCompatImageView, fragment: Fragment, srcImgFragment: String) {
-            if (srcImgFragment.isNotEmpty()){
+        @BindingAdapter("srcImgFragment", "fragment")
+        fun loadImageFragment(
+            appCompatImageView: AppCompatImageView?,
+            fragment: Fragment,
+            srcImgFragment: String?
+        ) {
+            if (!srcImgFragment.isNullOrEmpty()&& appCompatImageView != null) {
                 Glide.with(fragment)
                     .load(srcImgFragment)
                     .into(appCompatImageView)
             }
         }
     }
+
+
 }
