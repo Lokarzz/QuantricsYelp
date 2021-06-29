@@ -4,8 +4,6 @@ import android.net.Uri
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.lokarz.gameforview.model.api.retrofit.youtube.IYoutubeService
 import com.lokarz.gameforview.model.repository.firebase.FirebaseRepository
 import com.lokarz.gameforview.model.repository.google.GoogleRepository
 import com.lokarz.gameforview.model.repository.profile.ProfileRepository
@@ -13,19 +11,10 @@ import com.lokarz.gameforview.model.repository.youtube.YoutubeRepository
 import com.lokarz.gameforview.pojo.google.GoogleAccount
 import com.lokarz.gameforview.pojo.profile.ProfileData
 import com.lokarz.gameforview.pojo.youtube.YoutubeData
-import com.lokarz.gameforview.pojo.youtube.YoutubeResponse
-import com.lokarz.gameforview.pojo.youtube.videoDetail.VideoDetailResponse
 import com.lokarz.gameforview.util.Constant
-import com.lokarz.gameforview.util.GsonUtil
-import com.lokarz.gameforview.util.PreferenceUtil
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.ArrayList
 import javax.inject.Inject
 
 class AddYoutubeViewModel @Inject constructor(

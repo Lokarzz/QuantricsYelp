@@ -2,9 +2,6 @@ package com.lokarz.gameforview.util
 
 import android.content.Intent
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.lokarz.gameforview.pojo.google.GoogleAccount
-import java.io.Reader
 
 class GsonUtil {
 
@@ -14,17 +11,6 @@ class GsonUtil {
             var `object`: T? = null
             try {
                 `object` = gson.fromJson(json, clazz)
-            } catch (e: Exception) {
-                // do nothing
-            }
-            return `object`
-        }
-
-        fun <T> getGson(preferenceUtil: PreferenceUtil, clazz: Class<T>?): T? {
-            val gson = Gson()
-            var `object`: T? = null
-            try {
-                `object` = gson.fromJson(preferenceUtil.readSavedData(clazz?.simpleName), clazz)
             } catch (e: Exception) {
                 // do nothing
             }

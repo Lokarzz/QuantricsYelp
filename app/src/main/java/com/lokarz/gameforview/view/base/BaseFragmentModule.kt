@@ -1,7 +1,6 @@
 package com.lokarz.gameforview.view.base
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStoreOwner
 import dagger.Module
 import dagger.Provides

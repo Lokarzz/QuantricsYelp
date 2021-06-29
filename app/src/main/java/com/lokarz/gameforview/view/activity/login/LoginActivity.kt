@@ -1,19 +1,13 @@
 package com.lokarz.gameforview.view.activity.login
 
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.common.SignInButton
 import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.ActivityLoginBinding
 import com.lokarz.gameforview.util.ActivityUtil
-import com.lokarz.gameforview.util.GsonUtil
-import com.lokarz.gameforview.util.PreferenceUtil
-import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.activity.home.HomeActivity
 import com.lokarz.gameforview.view.base.BaseActivity
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {

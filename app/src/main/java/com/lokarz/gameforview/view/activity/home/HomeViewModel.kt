@@ -6,10 +6,6 @@ import com.lokarz.gameforview.model.repository.google.GoogleRepository
 import com.lokarz.gameforview.model.repository.profile.ProfileRepository
 import com.lokarz.gameforview.pojo.google.GoogleAccount
 import com.lokarz.gameforview.pojo.profile.ProfileData
-import com.lokarz.gameforview.util.GsonUtil
-import com.lokarz.gameforview.util.Preference
-import com.lokarz.gameforview.util.PreferenceUtil
-import com.lokarz.gameforview.util.RxGoogle
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject

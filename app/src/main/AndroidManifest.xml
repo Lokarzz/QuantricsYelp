@@ -16,7 +16,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5188779324240142~3011533300" />
+            android:value="ca-app-pub-5188779324240142~7302825971" />
 
         <activity android:name="com.lokarz.gameforview.view.activity.splash.SplashActivity">
             <intent-filter>

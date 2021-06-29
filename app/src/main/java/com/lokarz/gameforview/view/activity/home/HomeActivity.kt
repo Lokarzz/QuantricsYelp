@@ -1,13 +1,9 @@
 package com.lokarz.gameforview.view.activity.home
 
-import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -17,7 +13,6 @@ import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.ActivityHomeBinding
 import com.lokarz.gameforview.util.ActivityUtil
 import com.lokarz.gameforview.util.Constant
-import com.lokarz.gameforview.util.GsonUtil
 import com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity
 import com.lokarz.gameforview.view.activity.login.LoginActivity
 import com.lokarz.gameforview.view.base.BaseActivity

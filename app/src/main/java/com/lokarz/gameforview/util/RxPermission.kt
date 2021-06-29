@@ -3,29 +3,32 @@ package com.lokarz.gameforview.util
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleEmitter
 
-class RxPermission {
+class RxPermission(var appCompatActivity: AppCompatActivity) {
 
-    companion object {
+    var singleEmitter: SingleEmitter<Boolean>? = null
 
-        fun request(
-            appCompatActivity: AppCompatActivity, vararg permissions: String
-        ): Single<Boolean> {
-            return Single.create { source ->
-                val permissionResult =
-                    appCompatActivity.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-                        var success = true
-                        for (entry in it) {
-                            success = entry.value
-                            if (!success) {
-                                break
-                            }
-                        }
-                        source.onSuccess(success)
-                    }
-                permissionResult.launch(permissions)
-
+    private val permissionResult =
+        appCompatActivity.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            var success = true
+            for (entry in it) {
+                success = entry.value
+                if (!success) {
+                    break
+                }
             }
+            singleEmitter?.onSuccess(success)
+        }
+
+    fun request(
+        vararg permissions: String
+    ): Single<Boolean> {
+        return Single.create {
+            singleEmitter = it
+            permissionResult.launch(permissions)
+
         }
     }
 }
+

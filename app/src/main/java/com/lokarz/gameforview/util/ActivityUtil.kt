@@ -3,9 +3,7 @@ package com.lokarz.gameforview.util
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.app.AppCompatActivity
 
 class ActivityUtil {
     companion object {

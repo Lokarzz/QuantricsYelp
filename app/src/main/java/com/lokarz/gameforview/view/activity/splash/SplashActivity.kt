@@ -4,11 +4,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.ActivitySplashBinding
-import com.lokarz.gameforview.pojo.google.GoogleAccount
 import com.lokarz.gameforview.util.ActivityUtil
-import com.lokarz.gameforview.util.GsonUtil
-import com.lokarz.gameforview.util.PreferenceUtil
-import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.activity.home.HomeActivity
 import com.lokarz.gameforview.view.base.BaseActivity
 import javax.inject.Inject

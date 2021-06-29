@@ -2,9 +2,7 @@ package com.lokarz.gameforview.view.activity.addYoutube
 
 import android.content.ClipboardManager
 import android.content.Context
-import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar

@@ -9,7 +9,6 @@ import com.lokarz.gameforview.model.repository.google.GoogleLocalRepository
 import com.lokarz.gameforview.model.repository.google.GoogleRemoteRepository
 import com.lokarz.gameforview.model.repository.google.GoogleRepository
 import com.lokarz.gameforview.util.Preference
-import com.lokarz.gameforview.util.PreferenceUtil
 import com.lokarz.gameforview.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
 import dagger.Module

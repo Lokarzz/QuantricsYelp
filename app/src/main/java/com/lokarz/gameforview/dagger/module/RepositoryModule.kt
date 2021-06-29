@@ -4,8 +4,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.lokarz.gameforview.MainApplication
-import com.lokarz.gameforview.model.api.retrofit.youtube.YoutubeClient
 import com.lokarz.gameforview.model.api.retrofit.youtube.IYoutubeService
+import com.lokarz.gameforview.model.api.retrofit.youtube.YoutubeClient
 import com.lokarz.gameforview.util.Preference
 import dagger.Module
 import dagger.Provides

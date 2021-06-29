@@ -1,9 +1,6 @@
 package com.lokarz.gameforview.view.fragment.splash
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +10,6 @@ import com.google.android.gms.ads.AdView
 import com.lokarz.gameforview.R
 import com.lokarz.gameforview.databinding.FragmentSplashBinding
 import com.lokarz.gameforview.view.base.BaseFragment
-import com.lokarz.gameforview.viewmodel.AdMobViewModel
-import com.lokarz.gameforview.view.activity.splash.SplashViewModel
-import javax.inject.Inject
 
 class SplashFragment : BaseFragment() {
 

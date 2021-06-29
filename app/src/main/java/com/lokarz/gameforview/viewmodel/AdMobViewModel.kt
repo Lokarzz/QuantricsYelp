@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
-import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.lokarz.gameforview.util.Constant
@@ -21,11 +20,11 @@ class AdMobViewModel(context: Context) : ViewModel() {
         MobileAds.initialize(context) {}
         RewardedAd.load(
             context,
-            "ca-app-pub-3940256099942544/5224354917",
+            "ca-app-pub-5188779324240142/9478397327",
             getAdManagerAdRequest(),
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.d("AdMobViewModel", adError?.message)
+                    Log.d("AdMobViewModel", adError.message)
                     mRewardedAd = null
                 }
 

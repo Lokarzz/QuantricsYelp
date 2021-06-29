@@ -2,7 +2,6 @@ package com.lokarz.gameforview.util
 
 import android.content.Context
 import io.reactivex.rxjava3.core.Single
-import java.lang.Exception
 
 class Preference(val context: Context) {
 
@@ -74,7 +73,6 @@ class Preference(val context: Context) {
             editor.apply()
             it.onSuccess(true)
         }
-
     }
 
     companion object {

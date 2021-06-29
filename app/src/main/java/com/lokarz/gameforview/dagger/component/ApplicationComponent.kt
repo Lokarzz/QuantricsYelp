@@ -1,9 +1,9 @@
 package com.lokarz.gameforview.dagger.component
 
 import com.lokarz.gameforview.MainApplication
-import com.lokarz.gameforview.dagger.module.RepositoryModule
 import com.lokarz.gameforview.dagger.module.ActivityBuildersModule
 import com.lokarz.gameforview.dagger.module.FragmentBuildersModule
+import com.lokarz.gameforview.dagger.module.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

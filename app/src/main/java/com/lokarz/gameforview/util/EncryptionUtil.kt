@@ -34,7 +34,6 @@ class EncryptionUtil {
         return Base64.encodeToString(salt, Base64.DEFAULT)
     }
 
-
     fun encrypt(strToEncrypt: String): String {
         var ret = ""
         try {

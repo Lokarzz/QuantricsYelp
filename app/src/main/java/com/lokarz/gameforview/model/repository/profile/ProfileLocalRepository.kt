@@ -9,10 +9,14 @@ import javax.inject.Inject
 class ProfileLocalRepository @Inject constructor(private val preference: Preference) {
 
     fun saveProfile(profileData: ProfileData?): Single<Boolean> {
-        return preference.saveDataRx(
-            ProfileData::class.simpleName,
-            GsonUtil.getGsonString(profileData)
-        )
+        return Single.create {
+            preference.saveData(
+                ProfileData::class.simpleName,
+                GsonUtil.getGsonString(profileData)
+            )
+            it.onSuccess(true)
+        }
+
     }
 
 
