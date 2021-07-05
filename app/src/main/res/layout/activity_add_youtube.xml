@@ -48,20 +48,20 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="VideoId/YoutubeLink">
+                android:hint="@string/video_id_youtube_link">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_video_id_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="VideoId/YoutubeLink" />
+                    android:hint="@string/video_id_youtube_link" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add a video when you reach 5 game points" />
+                android:text="@string/add_a_video_when" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -71,20 +71,27 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NOTE: Non Gaming Video will be removed" />
+                android:text="@string/note_none_gaming" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add"
+                style="@style/ButtonType1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Add Youtube Video" />
+                android:drawableStart="@drawable/ic_add"
+                android:drawablePadding="4dp"
+                android:text="@string/add_youtube_video" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_paste"
+                style="@style/ButtonType1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paste Video Link" />
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_paste"
+                android:drawablePadding="4dp"
+                android:text="@string/paste_video_link" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

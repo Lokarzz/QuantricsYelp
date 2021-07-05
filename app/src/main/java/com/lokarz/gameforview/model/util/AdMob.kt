@@ -1,25 +1,24 @@
-package com.lokarz.gameforview.viewmodel
+package com.lokarz.gameforview.model.util
 
-import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.lokarz.gameforview.util.Constant
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleEmitter
 
-class AdMobViewModel(context: Context) : ViewModel() {
+class AdMob(private val appCompatActivity: AppCompatActivity) {
 
     var mRewardedAd: RewardedAd? = null
-    val rewardItem: MutableLiveData<String> = MutableLiveData()
+    var singleEmitter: SingleEmitter<String>? = null
 
     init {
-        MobileAds.initialize(context) {}
+        MobileAds.initialize(appCompatActivity) {}
         RewardedAd.load(
-            context,
+            appCompatActivity,
             "ca-app-pub-5188779324240142/9478397327",
             getAdManagerAdRequest(),
             object : RewardedAdLoadCallback() {
@@ -51,7 +50,7 @@ class AdMobViewModel(context: Context) : ViewModel() {
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                rewardItem.postValue(Constant.Error.REWARD_ALREADY_SHOWN)
+                singleEmitter?.onError(Throwable(Constant.Error.REWARD_ALREADY_SHOWN))
             }
 
             override fun onAdShowedFullScreenContent() {
@@ -62,13 +61,16 @@ class AdMobViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun showReward(activity: AppCompatActivity) {
-        mRewardedAd?.show(activity, onEarnReward())
+    fun showReward(): Single<String> {
+        mRewardedAd?.show(appCompatActivity, onResult())
+        return Single.create {
+            singleEmitter = it
+        }
     }
 
-    private fun onEarnReward(): OnUserEarnedRewardListener {
+    private fun onResult(): OnUserEarnedRewardListener {
         return OnUserEarnedRewardListener {
-            rewardItem.postValue(Constant.Success.REWARD_SUCCESS)
+            singleEmitter?.onSuccess(Constant.Success.REWARD_SUCCESS)
         }
     }
 }

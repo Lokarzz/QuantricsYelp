@@ -7,25 +7,27 @@ import com.lokarz.gameforview.view.base.BaseFragment
 
 class FragmentUtil {
     companion object {
-        fun goToFragment(fm: FragmentManager, fragment: BaseFragment, @IdRes container: Int) {
+        fun goToFragment(fm: FragmentManager?, fragment: BaseFragment, @IdRes container: Int) {
             try {
-                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                val ft = fm.beginTransaction()
-                ft.replace(container, fragment)
-                ft.commit()
+                fm?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                val ft = fm?.beginTransaction()
+                ft?.replace(container, fragment)
+                ft?.commit()
             } catch (e: Exception) {
-                Log.e("replaceFragment", e.toString())
+                Log.e("FragmentUtil", e.toString())
             }
         }
 
-        fun popFragment(fm: FragmentManager, fragment: BaseFragment, destination: Int) {
+        fun popFragment(fm: FragmentManager?, fragment: BaseFragment, destination: Int) {
             try {
-                val ft = fm.beginTransaction()
-                ft.replace(destination, fragment)
-                ft.addToBackStack(fragment.javaClass.simpleName)
-                ft.commit()
-            }catch (e: Exception) {
-                Log.e("addFragment", e.toString())
+                val ft = fm?.beginTransaction()
+                ft?.let {
+                    it.replace(destination, fragment)
+                    it.addToBackStack(fragment.javaClass.simpleName)
+                    it.commit()
+                }
+            } catch (e: Exception) {
+                Log.e("FragmentUtil", e.toString())
             }
 
         }

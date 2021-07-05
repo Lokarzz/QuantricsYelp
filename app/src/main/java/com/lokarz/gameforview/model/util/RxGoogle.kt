@@ -1,4 +1,4 @@
-package com.lokarz.gameforview.util
+package com.lokarz.gameforview.model.util
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +23,7 @@ class RxGoogle @Inject constructor(private var appCompatActivity: AppCompatActiv
                 completedTask.getResult(ApiException::class.java)
                 singleEmitter?.onSuccess(true)
             } catch (e: ApiException) {
-                singleEmitter?.onSuccess(false)
+                singleEmitter?.onError(Throwable(e.message))
             }
         }
 

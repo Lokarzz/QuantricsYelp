@@ -6,19 +6,22 @@ import com.lokarz.gameforview.model.repository.google.GoogleRepository
 import com.lokarz.gameforview.model.repository.profile.ProfileRepository
 import com.lokarz.gameforview.pojo.google.GoogleAccount
 import com.lokarz.gameforview.pojo.profile.ProfileData
+import com.lokarz.gameforview.model.util.AdMob
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
-    private val googleRepository: GoogleRepository
+    private val googleRepository: GoogleRepository,
+    private val adMob: AdMob
 ) :
     ViewModel() {
 
     val googleAccount: MutableLiveData<GoogleAccount> = MutableLiveData()
     val backGroundImage: MutableLiveData<String> = MutableLiveData()
     val currentPoints: MutableLiveData<String> = MutableLiveData()
+    val error: MutableLiveData<String> = MutableLiveData()
     var profileData: ProfileData? = null
 
     init {
@@ -35,7 +38,7 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun addRewardPoints() {
+    private fun addRewardPoints() {
         profileData?.gamingPoints = profileData?.gamingPoints?.plus(5)
         currentPoints.value = "Game Points: ${profileData?.gamingPoints}"
         profileRepository.saveProfile(profileData).subscribeOn(Schedulers.newThread())
@@ -62,6 +65,14 @@ class HomeViewModel @Inject constructor(
                 mutableLiveData.postValue(result)
             }
         return mutableLiveData
+    }
+
+    fun showReward(){
+        adMob.showReward().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { addRewardPoints() },
+                { err -> error.postValue(err.message) })
     }
 
 }

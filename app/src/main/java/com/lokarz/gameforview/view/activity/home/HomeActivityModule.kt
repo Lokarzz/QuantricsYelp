@@ -11,12 +11,11 @@ import com.lokarz.gameforview.model.repository.google.GoogleRepository
 import com.lokarz.gameforview.model.repository.profile.ProfileLocalRepository
 import com.lokarz.gameforview.model.repository.profile.ProfileRepository
 import com.lokarz.gameforview.util.Preference
-import com.lokarz.gameforview.util.RxGoogle
+import com.lokarz.gameforview.model.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
-import com.lokarz.gameforview.viewmodel.AdMobViewModel
+import com.lokarz.gameforview.model.util.AdMob
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
 
 
 @Module
@@ -55,11 +54,17 @@ class HomeActivityModule : BaseActivityModule<HomeActivity>() {
     }
 
     @Provides
+    fun provideAdMob(context: Context) : AdMob {
+        return AdMob(context as AppCompatActivity)
+    }
+
+    @Provides
     fun provideFactory(
         profileRepository: ProfileRepository,
-        googleRepository: GoogleRepository
+        googleRepository: GoogleRepository,
+        adMob: AdMob
     ): ViewModelProvider.Factory {
-        val homeViewModel = HomeViewModel(profileRepository, googleRepository)
+        val homeViewModel = HomeViewModel(profileRepository, googleRepository,adMob)
         return ViewModelProviderFactory(homeViewModel);
     }
 
@@ -74,23 +79,23 @@ class HomeActivityModule : BaseActivityModule<HomeActivity>() {
         ).get(HomeViewModel::class.java)
     }
 
-    @Provides
-    @Named("AdMobFactory")
-    fun provideAdMobFactory(context: Context): ViewModelProvider.Factory {
-        val adMobViewModel = AdMobViewModel(context)
-        return ViewModelProviderFactory(adMobViewModel);
-    }
-
-    @Provides
-    fun provideAdMobViewModel(
-        viewModelStoreOwner: ViewModelStoreOwner,
-        @Named("AdMobFactory") viewModelProvider: ViewModelProvider.Factory,
-    ): AdMobViewModel {
-        return ViewModelProvider(
-            viewModelStoreOwner,
-            viewModelProvider
-        ).get(AdMobViewModel::class.java)
-    }
+//    @Provides
+//    @Named("AdMobFactory")
+//    fun provideAdMobFactory(context: Context): ViewModelProvider.Factory {
+//        val adMobViewModel = AdMobViewModel(context)
+//        return ViewModelProviderFactory(adMobViewModel);
+//    }
+//
+//    @Provides
+//    fun provideAdMobViewModel(
+//        viewModelStoreOwner: ViewModelStoreOwner,
+//        @Named("AdMobFactory") viewModelProvider: ViewModelProvider.Factory,
+//    ): AdMobViewModel {
+//        return ViewModelProvider(
+//            viewModelStoreOwner,
+//            viewModelProvider
+//        ).get(AdMobViewModel::class.java)
+//    }
 
 
 }

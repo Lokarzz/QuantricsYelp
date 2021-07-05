@@ -5,7 +5,14 @@
     <string name="close_drawer">close drawer</string>
     <string name="game_points_hint_title">Ways to earn Gaming Points</string>
     <string name="game_points_hint_message">- Watch videos and earn a gaming point for every minute
-        \n- Watch the full advertisement and earn 5 points
+        \n- Watch the full advertisement and earn 5 points instantly
     \n\nNote: Swipe left/right for next video</string>
     <string name="google_login">Google Login</string>
+    <string name="ads_already_shown">Ads Already Shown this day</string>
+    <string name="watch_an_ad">Watch an Ad!</string>
+    <string name="add_youtube_video">Add Youtube Video</string>
+    <string name="paste_video_link">Paste Video Link</string>
+    <string name="add_a_video_when">Add a video when you reach 5 game points</string>
+    <string name="note_none_gaming">NOTE: None Gaming Video will be removed</string>
+    <string name="video_id_youtube_link">VideoId/YoutubeLink</string>
 </resources>

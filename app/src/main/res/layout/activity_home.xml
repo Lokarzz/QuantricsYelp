@@ -76,11 +76,14 @@
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_watch_add"
+                        style="@style/ButtonType1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
-                        android:text="Watch an Add" />
+                        android:drawableStart="@drawable/ic_video"
+                        android:drawablePadding="4dp"
+                        android:text="@string/watch_an_ad" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

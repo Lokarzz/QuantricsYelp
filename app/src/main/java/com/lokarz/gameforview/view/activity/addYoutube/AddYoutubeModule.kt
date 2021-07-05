@@ -17,7 +17,7 @@ import com.lokarz.gameforview.model.repository.profile.ProfileRepository
 import com.lokarz.gameforview.model.repository.youtube.YoutubeRemoteRepository
 import com.lokarz.gameforview.model.repository.youtube.YoutubeRepository
 import com.lokarz.gameforview.util.Preference
-import com.lokarz.gameforview.util.RxGoogle
+import com.lokarz.gameforview.model.util.RxGoogle
 import com.lokarz.gameforview.view.base.BaseActivityModule
 import dagger.Module
 import dagger.Provides

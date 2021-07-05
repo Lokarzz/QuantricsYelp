@@ -1,7 +1,7 @@
 package com.lokarz.gameforview.model.repository.google
 
 import com.lokarz.gameforview.pojo.google.GoogleAccount
-import com.lokarz.gameforview.util.RxGoogle
+import com.lokarz.gameforview.model.util.RxGoogle
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 

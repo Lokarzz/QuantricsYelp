@@ -10,13 +10,16 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(private var googleRepository: GoogleRepository) :
     ViewModel() {
 
+
+
     fun googleLogin(): MutableLiveData<Boolean> {
         val mutableLiveData = MutableLiveData<Boolean>()
         googleRepository.login().subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { result ->
+            .subscribe({ result ->
                 mutableLiveData.postValue(result)
-            }
+            }, {error ->
+            })
         return mutableLiveData
     }
 

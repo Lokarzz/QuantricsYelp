@@ -17,7 +17,6 @@ import com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity
 import com.lokarz.gameforview.view.activity.login.LoginActivity
 import com.lokarz.gameforview.view.base.BaseActivity
 import com.lokarz.gameforview.view.fragment.youtube.YoutubeFragment
-import com.lokarz.gameforview.viewmodel.AdMobViewModel
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
@@ -29,8 +28,8 @@ class HomeActivity : BaseActivity() {
     @Inject
     lateinit var homeViewModel: HomeViewModel
 
-    @Inject
-    lateinit var adMobViewModel: AdMobViewModel
+//    @Inject
+//    lateinit var adMobViewModel: AdMobViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +43,8 @@ class HomeActivity : BaseActivity() {
 
         initNavigation()
         initFragment()
-        initRewardItem()
+        initError()
         initClickListener()
-
-
     }
 
     private fun initClickListener() {
@@ -59,15 +56,14 @@ class HomeActivity : BaseActivity() {
         )
     }
 
-    private fun initRewardItem() {
-        adMobViewModel.rewardItem.observe(this) {
+    private fun initError() {
+        homeViewModel.error.observe(this) {
             when (it) {
-                Constant.Success.REWARD_SUCCESS -> {
-                    homeViewModel.addRewardPoints()
-                }
-                else -> {
-                    showToast("Ads Already Shown this day")
-                }
+                Constant.Error.REWARD_ALREADY_SHOWN -> showToast(
+                    getString(
+                        R.string.ads_already_shown
+                    )
+                )
             }
         }
     }
@@ -97,7 +93,7 @@ class HomeActivity : BaseActivity() {
                         .show()
                 }
                 R.id.btn_watch_add -> {
-                    adMobViewModel.showReward(this)
+                    homeViewModel.showReward()
                 }
             }
             drawerLayout?.closeDrawer(GravityCompat.START)
