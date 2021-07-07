@@ -65,7 +65,7 @@ class HomeActivityModule : BaseActivityModule<HomeActivity>() {
         adMob: AdMob
     ): ViewModelProvider.Factory {
         val homeViewModel = HomeViewModel(profileRepository, googleRepository,adMob)
-        return ViewModelProviderFactory(homeViewModel);
+        return ViewModelProviderFactory(homeViewModel)
     }
 
     @Provides

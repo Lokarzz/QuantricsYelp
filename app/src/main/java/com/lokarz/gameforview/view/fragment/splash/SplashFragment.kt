@@ -20,9 +20,9 @@ class SplashFragment : BaseFragment() {
 //    @Inject
 //    lateinit var adMobViewModel: AdMobViewModel
 
-    lateinit var adView: AdView;
+    lateinit var adView: AdView
 
-    lateinit var et: AppCompatEditText;
+    lateinit var et: AppCompatEditText
 
     companion object {
         fun newInstance(): SplashFragment {

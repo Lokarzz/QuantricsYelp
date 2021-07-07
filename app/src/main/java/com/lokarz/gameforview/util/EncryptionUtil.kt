@@ -73,11 +73,11 @@ class EncryptionUtil {
                 ITERATION_COUNT,
                 KEY_LENGTH
             )
-            val tmp = factory.generateSecret(spec);
+            val tmp = factory.generateSecret(spec)
             val secretKey = SecretKeySpec(tmp.encoded, AES)
 
-            val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+            val cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec)
             ret = String(cipher.doFinal(Base64.decode(strToDecrypt, Base64.DEFAULT)))
         } catch (e: Exception) {
             // do nothing
@@ -89,10 +89,10 @@ class EncryptionUtil {
         private const val SECRET_KEY = "BuildConfig.KEY"
         private const val SALT = "BuildConfig.SALT"
         private const val IV = "BuildConfig.IV"
-        private const val SECRETE_KEY_FACTORY_ALGORITHM = "PBKDF2WithHmacSHA1";
-        private const val CIPHER_TRANSFORMATION = "AES/CBC/PKCS7Padding";
-        private const val AES = "AES";
-        private const val ITERATION_COUNT = 10000;
-        private const val KEY_LENGTH = 256;
+        private const val SECRETE_KEY_FACTORY_ALGORITHM = "PBKDF2WithHmacSHA1"
+        private const val CIPHER_TRANSFORMATION = "AES/CBC/PKCS7Padding"
+        private const val AES = "AES"
+        private const val ITERATION_COUNT = 10000
+        private const val KEY_LENGTH = 256
     }
 }

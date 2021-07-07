@@ -42,7 +42,7 @@ class LoginActivityModule : BaseActivityModule<LoginActivity>() {
     @Provides
     fun provideFactory(googleRepository: GoogleRepository): ViewModelProvider.Factory {
         val loginViewModel = LoginViewModel(googleRepository)
-        return ViewModelProviderFactory(loginViewModel);
+        return ViewModelProviderFactory(loginViewModel)
     }
 
     @Provides

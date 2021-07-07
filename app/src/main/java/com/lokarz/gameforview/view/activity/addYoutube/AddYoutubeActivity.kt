@@ -2,6 +2,7 @@ package com.lokarz.gameforview.view.activity.addYoutube
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
@@ -12,6 +13,7 @@ import com.lokarz.gameforview.databinding.ActivityAddYoutubeBinding
 import com.lokarz.gameforview.pojo.youtube.YoutubeData
 import com.lokarz.gameforview.util.ActivityUtil
 import com.lokarz.gameforview.util.Constant
+import com.lokarz.gameforview.util.ViewUtil
 import com.lokarz.gameforview.view.activity.home.HomeActivity
 import com.lokarz.gameforview.view.base.BaseActivity
 import javax.inject.Inject
@@ -58,8 +60,8 @@ class AddYoutubeActivity : BaseActivity() {
     private fun pasteToField() {
         val clipboard = (getSystemService(Context.CLIPBOARD_SERVICE)) as? ClipboardManager
         val textToPaste = clipboard?.primaryClip?.getItemAt(0)?.text
-        val etVideoIdLink: AppCompatEditText = findViewById(R.id.et_video_id_link)
-        etVideoIdLink.setText(textToPaste)
+        addToField(textToPaste)
+
     }
 
     private fun initToolBar() {
@@ -77,9 +79,11 @@ class AddYoutubeActivity : BaseActivity() {
 
 
     private fun addYoutubeId() {
+        val progress: View = findViewById(R.id.pb_add)
         val etVideoIdLink: AppCompatEditText = findViewById(R.id.et_video_id_link)
         val videoIdLink = etVideoIdLink.text.toString()
         val youtubeData = YoutubeData(addYoutubeViewModel.getVideoId(videoIdLink))
+        ViewUtil.showView(true, progress)
         addYoutubeViewModel.addYoutubeVideoId(youtubeData).observe(this) {
             when (it) {
                 Constant.Success.VALID_ID -> {
@@ -87,17 +91,36 @@ class AddYoutubeActivity : BaseActivity() {
                 }
                 Constant.Error.INVALID_ID -> {
                     showToast("Invalid Youtube Video")
-
-                }
-                Constant.Error.SOMETHING_WENT_WRONG -> {
-                    showToast("Something went wrong")
                 }
                 Constant.Error.ID_ALREADY_ADDED -> {
                     showToast("Youtube Video is already added")
                 }
+                Constant.Error.NOT_ENOUGH_POINTS -> {
+                    showToast("Not Enough Points")
+                }
+                else -> {
+                    showToast("Something went wrong")
+                }
             }
+            ViewUtil.showView(false, progress)
         }
     }
 
+    private fun addToField(value : CharSequence?) {
+        val etVideoIdLink: AppCompatEditText = findViewById(R.id.et_video_id_link)
+        etVideoIdLink.setText(value)
+    }
+
+    private fun onShareLinkText(){
+        val link = intent.getStringExtra(Intent.EXTRA_TEXT)
+        if (!link.isNullOrEmpty()) {
+            addToField(link)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onShareLinkText()
+    }
 
 }

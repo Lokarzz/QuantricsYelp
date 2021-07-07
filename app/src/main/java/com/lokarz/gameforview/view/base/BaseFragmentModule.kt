@@ -16,12 +16,12 @@ abstract class BaseFragmentModule<T : BaseFragment> {
     }
 
     @Provides
-    fun provideContext(t: T): Context? {
+    fun provideContext(t: T): Context {
         return t.baseActivity
     }
 
     @Provides
     fun provideWeakReference(context: Context): WeakReference<Context> {
-        return WeakReference(context);
+        return WeakReference(context)
     }
 }

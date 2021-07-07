@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity() {
 
     fun initGoogleLogin() {
         val loginButton: SignInButton = findViewById(R.id.v_google_login)
-        loginButton.setSize(SignInButton.SIZE_STANDARD);
+        loginButton.setSize(SignInButton.SIZE_STANDARD)
         loginButton.setOnClickListener {
             loginViewModel.googleLogin().observe(this) {
                 if (it == true) {

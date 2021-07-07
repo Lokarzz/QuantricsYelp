@@ -27,7 +27,13 @@
         </activity>
 
         <activity android:name="com.lokarz.gameforview.view.activity.home.HomeActivity"/>
-        <activity android:name="com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity"/>
+        <activity android:name="com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.lokarz.gameforview.view.activity.login.LoginActivity"/>
 
     </application>

@@ -43,7 +43,7 @@ class SplashActivityModule : BaseActivityModule<SplashActivity>() {
     @Provides
     fun provideFactory(googleRepository: GoogleRepository): ViewModelProvider.Factory {
         val splashViewModel = SplashViewModel(googleRepository)
-        return ViewModelProviderFactory(splashViewModel);
+        return ViewModelProviderFactory(splashViewModel)
     }
 
     @Provides

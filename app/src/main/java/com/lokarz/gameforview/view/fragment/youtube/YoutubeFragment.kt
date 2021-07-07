@@ -26,7 +26,7 @@ class YoutubeFragment(val listener: Listener) : BaseFragment() {
 
 
     @Inject
-    lateinit var youtubeViewModel: YoutubeViewModel;
+    lateinit var youtubeViewModel: YoutubeViewModel
 
     var ytp1: YouTubePlayer? = null
     var ytp2: YouTubePlayer? = null
@@ -150,7 +150,7 @@ class YoutubeFragment(val listener: Listener) : BaseFragment() {
             }
         })
 
-        val ytpv2: YouTubePlayerView = mView.findViewById(R.id.ytpv2);
+        val ytpv2: YouTubePlayerView = mView.findViewById(R.id.ytpv2)
         lifecycle.addObserver(ytpv2)
         ytpv2.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {

@@ -38,7 +38,7 @@ class AddYoutubeViewModel @Inject constructor(
     }
 
     private infix fun <T : Comparable<T>> T?.isGreaterThanOrEqualTo(other: T?): Boolean =
-        if (this != null && other != null) this > other else false
+        if (this != null && other != null) this >= other else false
 
     private fun hasEnoughPoints(): Boolean {
         return profileData?.gamingPoints isGreaterThanOrEqualTo 5

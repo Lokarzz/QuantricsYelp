@@ -12,15 +12,15 @@ import javax.inject.Inject
 
 abstract class BaseFragment : Fragment(), HasAndroidInjector{
 
-    protected lateinit var mView: View;
+    protected lateinit var mView: View
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any?>
 
-    lateinit var baseActivity: BaseActivity;
+    lateinit var baseActivity: BaseActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        baseActivity = context as BaseActivity;
+        baseActivity = context as BaseActivity
         super.onCreate(savedInstanceState)
     }
 

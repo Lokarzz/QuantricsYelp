@@ -1,6 +1,6 @@
 package com.lokarz.gameforview.pojo.youtube
 
-class YoutubeResponse() {
+class YoutubeResponse {
 
     var data : ArrayList<YoutubeData>? = null
 }

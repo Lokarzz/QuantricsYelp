@@ -18,7 +18,7 @@ class FirebaseRepository @Inject constructor(private val firebaseRemoteRepositor
                 val data = youtubeResponse.data
                 if (data?.any { it.videoId == youtubeData.videoId } == false) {
                     data.add(youtubeData)
-                    firebaseRemoteRepository.addVideo(youtubeResponse).subscribe({ _ ->
+                    firebaseRemoteRepository.addVideo(youtubeResponse).subscribe({
                         source.onSuccess(true)
                     }, { error ->
                         source.onError(Throwable(error))

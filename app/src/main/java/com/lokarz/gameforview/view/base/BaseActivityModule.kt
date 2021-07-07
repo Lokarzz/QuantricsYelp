@@ -13,16 +13,16 @@ abstract class BaseActivityModule<T : AppCompatActivity> {
 
     @Provides
     fun provideViewModelStoreOwner(t: T): ViewModelStoreOwner {
-        return t;
+        return t
     }
 
     @Provides
     fun provideContext(t: T): Context {
-        return t;
+        return t
     }
 
     @Provides
     fun provideWeakReference(context: Context): WeakReference<Context> {
-        return WeakReference(context);
+        return WeakReference(context)
     }
 }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any?>;
+    lateinit var androidInjector: DispatchingAndroidInjector<Any?>
 
     @Inject
     lateinit var weakReference: WeakReference<Context>

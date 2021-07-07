@@ -73,15 +73,30 @@
                 android:layout_height="wrap_content"
                 android:text="@string/note_none_gaming" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_add"
-                style="@style/ButtonType1"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/ic_add"
-                android:drawablePadding="4dp"
-                android:text="@string/add_youtube_video" />
+
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/pb_add"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_add"
+                    style="@style/ButtonType1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_add"
+                    android:drawablePadding="4dp"
+                    android:text="@string/add_youtube_video" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_paste"
