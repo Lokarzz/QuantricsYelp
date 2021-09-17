@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="day_of_week">
+        <item>@string/mon</item>
+        <item>@string/tues</item>
+        <item>@string/wed</item>
+        <item>@string/thurs</item>
+        <item>@string/fri</item>
+        <item>@string/sat</item>
+        <item>@string/sun</item>
+    </string-array>
+    <string-array name="sort_by">
+        <item>@string/best_match</item>
+        <item>@string/rating</item>
+        <item>@string/review_count</item>
+        <item>@string/distance</item>
+    </string-array>
+</resources>

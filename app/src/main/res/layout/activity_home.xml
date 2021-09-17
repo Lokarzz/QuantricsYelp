@@ -1,112 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
     <data>
 
         <variable
             name="homeViewModel"
-            type="com.lokarz.gameforview.view.activity.home.HomeViewModel" />
+            type="com.lokarz.yelp.view.activity.home.HomeViewModel" />
 
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:context=".view.activity.home.HomeActivity">
 
-        <androidx.drawerlayout.widget.DrawerLayout
-            android:id="@+id/drawer_layout"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:focusableInTouchMode="true">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/abl"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:elevation="1dp"
-                android:visibility="visible">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/white" />
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="1dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginEnd="16dp">
 
-                    <FrameLayout
-                        android:id="@+id/fl"
-                        android:layout_width="match_parent"
-                        android:layout_height="424dp"
-                        android:layout_marginBottom="8dp" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_term"
+                        style="@style/SearchStyleEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{homeViewModel.currentPoints}"
-                            android:textColor="@android:color/black"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/iv_help"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="16dp"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_help" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_watch_add"
-                        style="@style/ButtonType1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:drawableStart="@drawable/ic_video"
+                        android:background="@drawable/bg_search"
+                        android:drawableStart="@drawable/ic_search"
                         android:drawablePadding="4dp"
-                        android:text="@string/watch_an_ad" />
+                        android:hint="@string/are_you_looking_for"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-            </com.google.android.material.appbar.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fcv"
+                android:name="com.lokarz.yelp.view.fragment.restaurants.RestaurantFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:paddingTop="?actionBarSize"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-            <com.google.android.material.navigation.NavigationView
-                android:id="@+id/navigation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_marginTop="?actionBarSize">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vg_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <include
-                    layout="@layout/inc_navigation"
-                    app:homeViewModel="@{homeViewModel}" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_location"
+                    style="@style/SearchStyleEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_search"
+                    android:drawableStart="@drawable/ic_location"
+                    android:drawablePadding="4dp"
+                    android:hint="@string/location"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/vg_filter_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </com.google.android.material.navigation.NavigationView>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vg_filter_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.drawerlayout.widget.DrawerLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_my_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_my_location" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_filter" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

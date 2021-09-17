@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lokarz.gameforview">
+    package="com.lokarz.yelp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.lokarz.gameforview.MainApplication"
+        android:name="com.lokarz.yelp.MainApplication"
         android:allowBackup="false"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="true">
+        android:theme="@style/AppTheme">
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5188779324240142~7302825971" />
-
-        <activity android:name="com.lokarz.gameforview.view.activity.splash.SplashActivity">
+        <activity
+            android:name="com.lokarz.yelp.view.activity.splash.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,15 +25,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.lokarz.gameforview.view.activity.home.HomeActivity"/>
-        <activity android:name="com.lokarz.gameforview.view.activity.addYoutube.AddYoutubeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.lokarz.gameforview.view.activity.login.LoginActivity"/>
+        <activity android:name="com.lokarz.yelp.view.activity.home.HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity
+            android:name="com.lokarz.yelp.view.activity.businessdetails.BusinessDetailsActivity"
+            android:theme="@style/AppTheme.Collapsing" />
+
 
     </application>
 

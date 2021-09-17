@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+
+        <variable
+            name="viewModel"
+            type="com.lokarz.yelp.view.fragment.restaurants.RestaurantViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_restaurant"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_restaurant" />
+
+        <FrameLayout
+            android:id="@+id/fl_shimmer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.shimmerLiveData ? View.VISIBLE : View.GONE, default=gone}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/shimmer_restaurants" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.showNoResult ? View.VISIBLE : View.GONE, default=gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="@string/sorry_no_result"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

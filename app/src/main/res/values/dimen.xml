@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_business_detail_text_size">28sp</dimen>
+    <dimen name="header_business_detail_text_size">16sp</dimen>
+    <dimen name="appbar_business_detail_height">250dp</dimen>
+
+    <dimen name="search_edit_text_vertical_padding">8dp</dimen>
+    <dimen name="search_edit_text_horizontal_padding">16dp</dimen>
+    <dimen name="search_edit_text_text_size">12sp</dimen>
+
+
+</resources>

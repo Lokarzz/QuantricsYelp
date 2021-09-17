@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "547194736236",
-    "project_id": "game-for-view-1622003794301",
-    "storage_bucket": "game-for-view-1622003794301.appspot.com"
+    "project_number": "55608866012",
+    "project_id": "quantrics-yelp",
+    "storage_bucket": "quantrics-yelp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547194736236:android:ce31eb48f6b36268405249",
+        "mobilesdk_app_id": "1:55608866012:android:fb5b79a351d09351b1b019",
         "android_client_info": {
-          "package_name": "com.lokarz.gameforview"
+          "package_name": "com.lokarz.yelp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547194736236-7atoqcrd44m20nh8g86amurg2brd22pr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.lokarz.gameforview",
-            "certificate_hash": "2daf6a9470cb7654052c7f51cf6e02b6db64142d"
-          }
-        },
-        {
-          "client_id": "547194736236-68cgbg1oi2fe77j5v8mdsma0m3o6bh40.apps.googleusercontent.com",
+          "client_id": "55608866012-hga39cn1atqllpcl9s5cp0jcdted9rmg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDQQBAAuQUvW8c-I3BzmVsPilk47CgX6gU"
+          "current_key": "AIzaSyB9jJVdxuanQ3h0Z5mfVLLIWkTdPhvm8sA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "547194736236-68cgbg1oi2fe77j5v8mdsma0m3o6bh40.apps.googleusercontent.com",
+              "client_id": "55608866012-hga39cn1atqllpcl9s5cp0jcdted9rmg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
