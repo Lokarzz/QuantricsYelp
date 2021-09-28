@@ -3,7 +3,6 @@ package com.lokarz.yelp.view.activity.home
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.databinding.DataBindingUtil
 import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.ActivityHomeBinding
@@ -19,21 +18,20 @@ class HomeActivity : BaseActivity() {
     @Inject
     lateinit var homeViewModel: HomeViewModel
 
-    private var etTerm: AppCompatEditText? = null
-    private var etLocation: AppCompatEditText? = null
+    private lateinit var binding: ActivityHomeBinding
+
     private var filterMap: HashMap<String, String>? = HashMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val activityHomeBinding = DataBindingUtil.setContentView<ActivityHomeBinding>(
+        binding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_home
         )
-        activityHomeBinding.homeViewModel = homeViewModel
-        activityHomeBinding.lifecycleOwner = this
+        binding.homeViewModel = homeViewModel
+        binding.lifecycleOwner = this
 
         initHomeView()
-
     }
 
     private fun initHomeView() {
@@ -56,12 +54,11 @@ class HomeActivity : BaseActivity() {
 
     private fun onCurrentLocation() {
         showToast(getString(R.string.location_updated))
-        etLocation?.setText(getString(R.string.current_location))
+        binding.etLocation.setText(getString(R.string.current_location))
     }
 
     private fun initAddressSearch() {
-        etLocation = findViewById(R.id.et_location)
-        etLocation?.setOnEditorActionListener { _, actionId, _ ->
+        binding.etLocation.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH, EditorInfo.IME_ACTION_DONE -> {
                     searchByLocation()
@@ -72,8 +69,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initSearch() {
-        etTerm = findViewById(R.id.et_term)
-        etTerm?.setOnEditorActionListener { _, actionId, _ ->
+        binding.etLocation.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH, EditorInfo.IME_ACTION_DONE -> {
                     searchByTerm()
@@ -84,13 +80,13 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun searchByTerm() {
-        val searchText = etTerm?.text.toString()
+        val searchText = binding.etTerm.text.toString()
         homeViewModel.searchByTerm(searchText)
         ViewUtil.hideKeyboard(this)
     }
 
     private fun searchByLocation() {
-        val searchText = etLocation?.text.toString()
+        val searchText = binding.etLocation.text.toString()
         homeViewModel.searchByLocation(searchText)
         ViewUtil.hideKeyboard(this)
     }

@@ -13,9 +13,6 @@ import javax.inject.Singleton
 @Module
 class ModelModule {
 
-
-
-
     @Singleton
     @Provides
     fun provideStringResource(mainApplication: MainApplication): StringResource {

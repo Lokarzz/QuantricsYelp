@@ -2,7 +2,6 @@ package com.lokarz.yelp.view.activity.businessdetails
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,21 +20,23 @@ import javax.inject.Inject
 
 class BusinessDetailsActivity : BaseActivity() {
 
-    private var toolbar: Toolbar? = null
 
     @Inject
     lateinit var viewModel: BusinessDetailsViewModel
 
+    private lateinit var binding: ActivityBusinessDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val activityHomeBinding = DataBindingUtil.setContentView<ActivityBusinessDetailsBinding>(
+        binding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_business_details
         )
-        activityHomeBinding.viewModel = viewModel
-        activityHomeBinding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         initBusinessDetailsView()
+
 
     }
 
@@ -132,16 +133,12 @@ class BusinessDetailsActivity : BaseActivity() {
     }
 
     private fun initNavigation() {
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar?.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
-    }
-
-    private fun initFragment() {
     }
 
 

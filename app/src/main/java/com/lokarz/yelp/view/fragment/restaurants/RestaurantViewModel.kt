@@ -27,6 +27,7 @@ class RestaurantViewModel(
         MutableLiveData()
     }
 
+
     private val searchParams = HashMap<String, String>()
 
     init {

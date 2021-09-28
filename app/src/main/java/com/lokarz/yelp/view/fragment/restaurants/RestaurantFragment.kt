@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.FragmentRestaurantBinding
@@ -26,8 +25,8 @@ class RestaurantFragment : BaseFragment() {
     @Inject
     lateinit var viewModel: RestaurantViewModel
 
+    lateinit var binding: FragmentRestaurantBinding
 
-    var rvRestaurant: RecyclerView? = null
     private val arrayList = ArrayList<Businesses>()
     private var restaurantAdapter: RestaurantAdapter? = null
     private val homeViewModel: HomeViewModel by activityViewModels()
@@ -37,17 +36,17 @@ class RestaurantFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val fragmentRestaurantBinding = DataBindingUtil.inflate<FragmentRestaurantBinding>(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_restaurant,
             container,
             false
         )
-        fragmentRestaurantBinding.viewModel = viewModel
-        fragmentRestaurantBinding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
 
-        return fragmentRestaurantBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -128,12 +127,11 @@ class RestaurantFragment : BaseFragment() {
     }
 
     private fun initRecyclerView() {
-        rvRestaurant = view?.findViewById(R.id.rv_restaurant)
-        rvRestaurant?.layoutManager =
+        binding.rvRestaurant.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         restaurantAdapter = RestaurantAdapter(this, arrayList)
         restaurantAdapter?.onItemClickListener = getOnItemClickListener()
-        rvRestaurant?.adapter = restaurantAdapter
+        binding.rvRestaurant.adapter = restaurantAdapter
 
     }
 
@@ -157,11 +155,17 @@ class RestaurantFragment : BaseFragment() {
         super.onConfigurationChanged(newConfig)
         when (newConfig.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> {
-                updateLayoutManager(4, rvRestaurant?.layoutManager as StaggeredGridLayoutManager)
+                updateLayoutManager(
+                    4,
+                    binding.rvRestaurant.layoutManager as StaggeredGridLayoutManager
+                )
 
             }
             Configuration.ORIENTATION_PORTRAIT -> {
-                updateLayoutManager(2, rvRestaurant?.layoutManager as StaggeredGridLayoutManager)
+                updateLayoutManager(
+                    2,
+                    binding.rvRestaurant.layoutManager as StaggeredGridLayoutManager
+                )
 
             }
         }
