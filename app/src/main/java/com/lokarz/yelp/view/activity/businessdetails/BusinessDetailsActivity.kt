@@ -1,10 +1,8 @@
 package com.lokarz.yelp.view.activity.businessdetails
 
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.lokarz.yelp.R
@@ -65,9 +63,9 @@ class BusinessDetailsActivity : BaseActivity() {
         val open = hours?.get(0)?.open
         open ?: return
 
-        val rvHours = findViewById<RecyclerView>(R.id.rv_hours_of_operation)
-        rvHours?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvHours?.adapter = BusinessHoursAdapter(open)
+        binding.rvHoursOfOperation.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvHoursOfOperation.adapter = BusinessHoursAdapter(open)
     }
 
     private fun initBusinessData(data: BusinessDetailResponse) {
@@ -79,9 +77,8 @@ class BusinessDetailsActivity : BaseActivity() {
         if (photos.isEmpty()) {
             return
         }
-        val rvPhotos = findViewById<RecyclerView>(R.id.rv_business_photos)
-        rvPhotos?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvPhotos?.adapter = BusinessPhotoAdapter(this, photos)
+        binding.rvBusinessPhotos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvBusinessPhotos.adapter = BusinessPhotoAdapter(this, photos)
     }
 
     private fun initCategories(data: BusinessDetailResponse) {
@@ -89,9 +86,8 @@ class BusinessDetailsActivity : BaseActivity() {
         if (categories.isEmpty()) {
             return
         }
-        val rvPhotos = findViewById<RecyclerView>(R.id.rv_business_categories)
-        rvPhotos?.layoutManager = FlexboxLayoutManager(this)
-        rvPhotos?.adapter = BusinessCategoriesAdapter(categories)
+        binding.rvBusinessCategories.layoutManager = FlexboxLayoutManager(this)
+        binding.rvBusinessCategories.adapter = BusinessCategoriesAdapter(categories)
     }
 
     private fun loadBannerImage(bannerUrl: String) {
@@ -99,38 +95,9 @@ class BusinessDetailsActivity : BaseActivity() {
         if (image.isEmpty()) {
             image = Constant.Image.ITEM_DEFAULT_IMAGE
         }
-        Glide.with(this).load(image).into(findViewById(R.id.iv_banner))
+        Glide.with(this).load(image).into(binding.ivBanner)
     }
 
-    private fun initClickListener() {
-        setNavigationOnClickListener(
-
-        )
-    }
-
-    private fun setNavigationOnClickListener(vararg ids: Int) {
-        for (id in ids) {
-//            findViewById<View>(id).setOnClickListener(getOnClickListener())
-        }
-    }
-
-    private fun getOnClickListener(): View.OnClickListener {
-        return View.OnClickListener {
-//            when (it.id) {
-//                R.id.vg_add_youtube_video -> {
-//                    val map = HashMap<String, String>()
-//                    map[Constant.Yelp.TERM] = "starbucks"
-//                    map[Constant.Yelp.LATITUDE] = "10.2571968"
-//                    map[Constant.Yelp.LONGITUDE] = "123.8322375"
-//                    homeViewModel.searchBusiness(map)
-//                }
-//                R.id.vg_logout -> {
-//
-//                }
-//            }
-//            drawerLayout?.closeDrawer(GravityCompat.START)
-        }
-    }
 
     private fun initNavigation() {
         setSupportActionBar(binding.toolbar)

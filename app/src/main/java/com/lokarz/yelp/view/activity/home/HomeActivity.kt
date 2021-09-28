@@ -93,8 +93,8 @@ class HomeActivity : BaseActivity() {
 
     private fun initClickListener() {
         ViewUtil.setClickListener(
-            this, getOnClickListener(), R.id.iv_my_location,
-            R.id.iv_filter,
+            getOnClickListener(), binding.ivMyLocation,
+            binding.ivFilter,
         )
     }
 

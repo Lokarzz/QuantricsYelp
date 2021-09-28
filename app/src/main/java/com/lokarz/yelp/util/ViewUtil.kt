@@ -16,19 +16,9 @@ object ViewUtil {
         }
     }
 
-    fun setClickListener(parentView: View, listener: View.OnClickListener, vararg ids: Int) {
-        for (id in ids) {
-            parentView.findViewById<View>(id).setOnClickListener(listener)
-        }
-    }
-
-    fun setClickListener(
-        appCompatActivity: AppCompatActivity,
-        listener: View.OnClickListener,
-        vararg ids: Int
-    ) {
-        for (id in ids) {
-            appCompatActivity.findViewById<View>(id).setOnClickListener(listener)
+    fun setClickListener(listener: View.OnClickListener, vararg views: View) {
+        for (view in views) {
+            view.setOnClickListener(listener)
         }
     }
 }

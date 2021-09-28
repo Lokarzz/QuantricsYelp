@@ -2,15 +2,11 @@ package com.lokarz.yelp.view.adapter.recylerview
 
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatRatingBar
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.lokarz.yelp.R
+import com.lokarz.yelp.databinding.ItemRestaurantBinding
 import com.lokarz.yelp.pojo.yelp.search.Businesses
 import com.lokarz.yelp.util.AppListener
 import com.lokarz.yelp.util.Constant
@@ -21,17 +17,10 @@ class RestaurantAdapter(private val fragment: Fragment, private val data: ArrayL
     var onBottomReachedListener: AppListener.OnBottomReachedListener? = null
     var onItemClickListener: AppListener.OnItemClickListener<Businesses>? = null
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ivImage: AppCompatImageView = view.findViewById(R.id.iv_image)
-        val tvName: AppCompatTextView = view.findViewById(R.id.tv_name)
-        val tvDescription: AppCompatTextView = view.findViewById(R.id.tv_description)
-        val ratingBar: AppCompatRatingBar = view.findViewById(R.id.rating_bar)
-    }
+    class ViewHolder(val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_restaurant, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(ItemRestaurantBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -42,11 +31,11 @@ class RestaurantAdapter(private val fragment: Fragment, private val data: ArrayL
             imageUrl = Constant.Image.ITEM_DEFAULT_IMAGE
         }
         Glide.with(fragment).load(imageUrl)
-            .into(holder.ivImage)
+            .into(holder.binding.ivImage)
 
-        holder.tvName.text = business.name
-        holder.tvDescription.text = getSnippet(business)
-        holder.ratingBar.rating = business.rating
+        holder.binding.tvName.text = business.name
+        holder.binding.tvDescription.text = getSnippet(business)
+        holder.binding.ratingBar.rating = business.rating
 
         if (onBottomReachedListener != null && data.size - 1 == position) {
             onBottomReachedListener?.onBottomReached()

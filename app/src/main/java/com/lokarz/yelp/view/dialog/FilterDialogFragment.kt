@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatSpinner
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.lokarz.yelp.R
+import com.lokarz.yelp.databinding.DialogFragmentFilterBinding
 import com.lokarz.yelp.util.AppListener
 import com.lokarz.yelp.util.Constant
 import com.lokarz.yelp.util.ViewUtil
@@ -14,15 +14,16 @@ import com.lokarz.yelp.util.ViewUtil
 class FilterDialogFragment : BottomSheetDialogFragment() {
 
     var onApplyFilterListener: AppListener.OnApplyFilterListener? = null
-    private var spnSort: AppCompatSpinner? = null
     var defaultData: HashMap<String, String>? = null
+    lateinit var binding: DialogFragmentFilterBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_fragment_filter, container, false)
+    ): View {
+        binding = DialogFragmentFilterBinding.inflate(LayoutInflater.from(context))
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,9 +38,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun initClickListener() {
-        view?.let {
-            ViewUtil.setClickListener(it, getOnClickListener(), R.id.btn_apply_filter)
-        }
+        ViewUtil.setClickListener(getOnClickListener(), binding.btnApplyFilter)
     }
 
     private fun getOnClickListener(): View.OnClickListener {
@@ -62,7 +61,7 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun getSortValue(): String {
-        val sortSelected = spnSort?.selectedItem.toString()
+        val sortSelected = binding.spnSort.selectedItem.toString()
         var ret = sortSelected
         when (sortSelected) {
             getString(R.string.best_match) -> {
@@ -83,10 +82,8 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
 
     private fun initSort() {
-        spnSort = view?.findViewById(R.id.spn_sort)
         val sortVal = defaultData?.get(Constant.Yelp.SORT_BY) ?: ""
-        spnSort?.setSelection(getSortPos(sortVal))
-
+        binding.spnSort.setSelection(getSortPos(sortVal))
     }
 
 
