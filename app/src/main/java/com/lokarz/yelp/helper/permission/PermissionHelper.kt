@@ -1,4 +1,4 @@
-package com.lokarz.yelp.util
+package com.lokarz.yelp.helper.permission
 
 import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleEmitter
 
-class AppPermission(private val appCompatActivity: AppCompatActivity) {
+class PermissionHelper(private val appCompatActivity: AppCompatActivity) {
 
     private var singleEmitter: SingleEmitter<Boolean>? = null
 

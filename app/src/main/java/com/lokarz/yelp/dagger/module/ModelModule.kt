@@ -3,8 +3,8 @@ package com.lokarz.yelp.dagger.module
 import com.lokarz.yelp.MainApplication
 import com.lokarz.yelp.model.api.retrofit.yelp.IYelpService
 import com.lokarz.yelp.model.api.retrofit.yelp.YelpClient
-import com.lokarz.yelp.model.repository.yelp.YelpRemoteRepository
-import com.lokarz.yelp.model.repository.yelp.YelpRepository
+import com.lokarz.yelp.model.repository.YelpRemoteRepository
+import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.util.StringResource
 import dagger.Module
 import dagger.Provides

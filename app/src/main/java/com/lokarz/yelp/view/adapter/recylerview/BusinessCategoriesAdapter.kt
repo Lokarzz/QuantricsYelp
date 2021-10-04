@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lokarz.yelp.databinding.ItemBusinessCategoriesBinding
-import com.lokarz.yelp.pojo.yelp.Categories
+import com.lokarz.yelp.model.repository.poko.Categories
 import com.lokarz.yelp.util.AppListener
 
 class BusinessCategoriesAdapter(private val data: ArrayList<Categories>) :

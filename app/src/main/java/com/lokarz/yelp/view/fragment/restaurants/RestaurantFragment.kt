@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.FragmentRestaurantBinding
-import com.lokarz.yelp.pojo.yelp.search.Businesses
+import com.lokarz.yelp.databinding.ItemRestaurantBinding
+import com.lokarz.yelp.model.repository.poko.search.Businesses
 import com.lokarz.yelp.util.ActivityUtil
 import com.lokarz.yelp.util.AppListener
 import com.lokarz.yelp.util.Constant
@@ -19,7 +20,7 @@ import com.lokarz.yelp.view.activity.home.HomeViewModel
 import com.lokarz.yelp.view.adapter.recylerview.RestaurantAdapter
 import com.lokarz.yelp.view.base.BaseFragment
 import javax.inject.Inject
-
+import androidx.core.util.Pair as UtilPair
 class RestaurantFragment : BaseFragment() {
 
     @Inject
@@ -36,12 +37,8 @@ class RestaurantFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_restaurant,
-            container,
-            false
-        )
+        binding = FragmentRestaurantBinding.inflate(inflater, container, false)
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -129,25 +126,37 @@ class RestaurantFragment : BaseFragment() {
     private fun initRecyclerView() {
         binding.rvRestaurant.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.rvRestaurant.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                println("onScroll $dy")
+                homeViewModel.onScrollChange(dy = dy)
+            }
+        })
         restaurantAdapter = RestaurantAdapter(this, arrayList)
         restaurantAdapter?.onItemClickListener = getOnItemClickListener()
         binding.rvRestaurant.adapter = restaurantAdapter
 
     }
 
-    private fun getOnItemClickListener(): AppListener.OnItemClickListener<Businesses> {
-        return object : AppListener.OnItemClickListener<Businesses> {
-            override fun onItemClick(item: Businesses) {
-                toDetailsScreen(item)
+    private fun getOnItemClickListener(): AppListener.OnItemViewClickListener<Businesses, ItemRestaurantBinding> {
+        return object : AppListener.OnItemViewClickListener<Businesses, ItemRestaurantBinding> {
+            override fun onItemViewClick(item: Businesses, binding: ItemRestaurantBinding) {
+                toDetailsScreen(item, binding)
             }
+
         }
     }
 
-    private fun toDetailsScreen(businesses: Businesses) {
+    private fun toDetailsScreen(businesses: Businesses, binding: ItemRestaurantBinding) {
         val args = Bundle()
         args.putString(Constant.App.BUSINESS_ID, businesses.id)
+        args.putString(Constant.App.IMAGE_URL, businesses.imageUrl)
+        args.putString(Constant.App.NAME, businesses.name)
         activity?.let {
-            ActivityUtil.popUpScreen(it, BusinessDetailsActivity::class.java, args)
+            val option = ActivityOptionsCompat.makeSceneTransitionAnimation(it,
+                UtilPair.create(binding.ivImage, businesses.imageUrl),
+                UtilPair.create(binding.tvName, businesses.name))
+            ActivityUtil.popUpScreen(it, BusinessDetailsActivity::class.java, args, option = option)
         }
     }
 

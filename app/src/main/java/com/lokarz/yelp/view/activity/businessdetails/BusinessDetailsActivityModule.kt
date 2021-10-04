@@ -3,7 +3,7 @@ package com.lokarz.yelp.view.activity.businessdetails
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.lokarz.yelp.dagger.factory.ViewModelProviderFactory
-import com.lokarz.yelp.model.repository.yelp.YelpRepository
+import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.util.StringResource
 import com.lokarz.yelp.view.base.BaseActivityModule
 import dagger.Module

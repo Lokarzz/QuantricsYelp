@@ -3,7 +3,6 @@ package com.lokarz.yelp.view.activity.home
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.databinding.DataBindingUtil
 import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.ActivityHomeBinding
 import com.lokarz.yelp.util.AppListener
@@ -24,10 +23,8 @@ class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_home
-        )
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.homeViewModel = homeViewModel
         binding.lifecycleOwner = this
 

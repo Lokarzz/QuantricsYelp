@@ -1,7 +1,7 @@
-package com.lokarz.yelp.model.repository.yelp
+package com.lokarz.yelp.model.repository
 
-import com.lokarz.yelp.pojo.yelp.businessdetails.BusinessDetailResponse
-import com.lokarz.yelp.pojo.yelp.search.SearchResponse
+import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailResponse
+import com.lokarz.yelp.model.repository.poko.search.SearchResponse
 import io.reactivex.rxjava3.core.Single
 
 class YelpRepository constructor(private val yelpRemoteRepository: YelpRemoteRepository) {

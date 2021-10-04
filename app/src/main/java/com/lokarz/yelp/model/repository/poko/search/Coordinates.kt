@@ -1,4 +1,4 @@
-package com.lokarz.yelp.pojo.yelp.search
+package com.lokarz.yelp.model.repository.poko.search
 
 import com.google.gson.annotations.SerializedName
 

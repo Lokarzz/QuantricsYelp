@@ -1,9 +1,9 @@
-package com.lokarz.yelp.pojo.yelp.businessdetails
+package com.lokarz.yelp.model.repository.poko.businessdetails
 
 import com.google.gson.annotations.SerializedName
-import com.lokarz.yelp.pojo.yelp.Categories
-import com.lokarz.yelp.pojo.yelp.Location
-import com.lokarz.yelp.pojo.yelp.search.Coordinates
+import com.lokarz.yelp.model.repository.poko.Categories
+import com.lokarz.yelp.model.repository.poko.Location
+import com.lokarz.yelp.model.repository.poko.search.Coordinates
 
 data class BusinessDetailResponse(
     @SerializedName("id") val id: String,

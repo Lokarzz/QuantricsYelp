@@ -4,6 +4,8 @@ class Constant {
 
     object App {
         const val BUSINESS_ID = "business_id"
+        const val IMAGE_URL = "image_url"
+        const val NAME = "name"
     }
 
     object Yelp {

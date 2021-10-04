@@ -59,6 +59,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.fragment.app.FragmentContainerView
@@ -66,23 +67,24 @@
                 android:name="com.lokarz.yelp.view.fragment.restaurants.RestaurantFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:paddingTop="?actionBarSize"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/vg_filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:background="?colorPrimary"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibility="@{homeViewModel.filterVisibility}">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_location"

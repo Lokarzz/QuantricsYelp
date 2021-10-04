@@ -1,8 +1,6 @@
 package com.lokarz.yelp.view.activity.splash
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.ActivitySplashBinding
 import com.lokarz.yelp.util.ActivityUtil
 import com.lokarz.yelp.view.activity.home.HomeActivity
@@ -11,7 +9,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class SplashActivity : BaseActivity() {
 
@@ -20,12 +17,11 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ActivitySplashBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
 
-        val activitySplashBinding = DataBindingUtil.setContentView<ActivitySplashBinding>(
-            this,
-            R.layout.activity_splash
-        )
-        activitySplashBinding.lifecycleOwner = this
+        setContentView(binding.root)
+
 
 
         Single.just(1)

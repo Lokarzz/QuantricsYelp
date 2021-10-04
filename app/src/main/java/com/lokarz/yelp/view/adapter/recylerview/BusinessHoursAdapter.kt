@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.ItemBusinessHoursBinding
-import com.lokarz.yelp.pojo.yelp.businessdetails.Open
+import com.lokarz.yelp.model.repository.poko.businessdetails.Open
 import com.lokarz.yelp.util.AppListener
 import com.lokarz.yelp.util.DateUtil
 

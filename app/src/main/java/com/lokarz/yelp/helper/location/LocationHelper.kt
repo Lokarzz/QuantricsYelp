@@ -1,4 +1,4 @@
-package com.lokarz.yelp.util.location
+package com.lokarz.yelp.helper.location
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -14,12 +14,12 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.lokarz.yelp.util.AppPermission
+import com.lokarz.yelp.helper.permission.PermissionHelper
 import io.reactivex.rxjava3.core.Single
 
-class AppLocation(
+class LocationHelper(
     private val appCompatActivity: AppCompatActivity,
-    private val appPermission: AppPermission
+    private val permissionHelper: PermissionHelper
 ) {
 
     fun goToSettings(appCompatActivity: AppCompatActivity) {
@@ -32,14 +32,14 @@ class AppLocation(
     }
 
     fun requestPermission(): Single<Boolean> {
-        return appPermission.request(
+        return permissionHelper.request(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
         )
     }
 
     private fun isPermissionGranted(): Boolean {
-        return appPermission.isGranted(
+        return permissionHelper.isGranted(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
         )

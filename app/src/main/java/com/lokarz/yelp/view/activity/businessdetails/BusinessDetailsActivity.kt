@@ -1,14 +1,13 @@
 package com.lokarz.yelp.view.activity.businessdetails
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.lokarz.yelp.R
 import com.lokarz.yelp.databinding.ActivityBusinessDetailsBinding
-import com.lokarz.yelp.pojo.yelp.businessdetails.BusinessDetailResponse
-import com.lokarz.yelp.pojo.yelp.businessdetails.Hours
+import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailResponse
+import com.lokarz.yelp.model.repository.poko.businessdetails.Hours
 import com.lokarz.yelp.util.Constant
 import com.lokarz.yelp.view.adapter.recylerview.BusinessCategoriesAdapter
 import com.lokarz.yelp.view.adapter.recylerview.BusinessHoursAdapter
@@ -26,12 +25,13 @@ class BusinessDetailsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_business_details
-        )
+
+        binding = ActivityBusinessDetailsBinding.inflate(layoutInflater)
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        setContentView(binding.root)
 
         initBusinessDetailsView()
 
@@ -42,6 +42,32 @@ class BusinessDetailsActivity : BaseActivity() {
         observeBusinessData()
         getBusinessData()
         initNavigation()
+        initSharedElements()
+    }
+
+    private fun initSharedElements() {
+        postponeEnterTransition()
+
+        initBannerElement()
+        initNameElement()
+
+        startPostponedEnterTransition()
+    }
+
+    private fun initNameElement() {
+        val name = intent.getStringExtra(Constant.App.NAME)
+        name?.let {
+            ViewCompat.setTransitionName(binding.tvName, it)
+            binding.tvName.text = it
+        }
+    }
+
+    private fun initBannerElement() {
+        val imageUrl = intent.getStringExtra(Constant.App.IMAGE_URL)
+        imageUrl?.let {
+            ViewCompat.setTransitionName(binding.ivBanner, it)
+            loadBannerImage(imageUrl)
+        }
     }
 
     private fun getBusinessData() {
@@ -77,7 +103,8 @@ class BusinessDetailsActivity : BaseActivity() {
         if (photos.isEmpty()) {
             return
         }
-        binding.rvBusinessPhotos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvBusinessPhotos.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvBusinessPhotos.adapter = BusinessPhotoAdapter(this, photos)
     }
 
@@ -103,7 +130,7 @@ class BusinessDetailsActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            finishAfterTransition()
         }
 
     }

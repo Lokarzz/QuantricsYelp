@@ -3,8 +3,8 @@ package com.lokarz.yelp.view.fragment.restaurants
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lokarz.yelp.model.repository.yelp.YelpRepository
-import com.lokarz.yelp.pojo.yelp.search.Businesses
+import com.lokarz.yelp.model.repository.YelpRepository
+import com.lokarz.yelp.model.repository.poko.search.Businesses
 import com.lokarz.yelp.util.Constant
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers

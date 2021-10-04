@@ -16,9 +16,9 @@ android {
     signingConfigs {
         release {
             storeFile file('..\\keystore\\keystore.jks')
-            storePassword '5d%c3*w/pk9A\'sZE'
-            keyAlias 'key0'
-            keyPassword '5d%c3*w/pk9A\'sZE'
+            storePassword keyProperties["storePassword"]
+            keyAlias keyProperties["keyAlias"]
+            keyPassword keyProperties["keyPassword"]
         }
     }
     compileSdkVersion 31

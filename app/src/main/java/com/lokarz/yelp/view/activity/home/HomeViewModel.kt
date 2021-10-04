@@ -3,15 +3,17 @@ package com.lokarz.yelp.view.activity.home
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lokarz.yelp.model.repository.yelp.YelpRepository
+import com.lokarz.yelp.helper.location.LocationHelper
+import com.lokarz.yelp.model.repository.YelpRepository
+import com.lokarz.yelp.util.AppEnum
 import com.lokarz.yelp.util.StringResource
-import com.lokarz.yelp.util.location.AppLocation
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 class HomeViewModel(
     private val yelpRepository: YelpRepository,
-    private val appLocation: AppLocation,
+    private val locationHelper: LocationHelper,
     private val stringResource: StringResource
 ) :
     ViewModel() {
@@ -35,6 +37,15 @@ class HomeViewModel(
         MutableLiveData()
     }
 
+    val filterVisibility: MutableLiveData<Boolean> by lazy {
+        MutableLiveData()
+    }
+
+    val visibilityRelay : PublishSubject<Boolean> by lazy {
+        PublishSubject.create()
+    }
+
+
 
     fun searchByTerm(text: String) {
         termSearchLiveData.value = text
@@ -48,8 +59,13 @@ class HomeViewModel(
         filterLiveData.value = map
     }
 
+    fun onScrollChange(dy : Int){
+        val state = if (dy >= 0) AppEnum.ScrollState.UP else AppEnum.ScrollState.DOWN
+        filterVisibility.value = AppEnum.ScrollState.UP == state
+    }
+
     fun requestLocation() {
-        appLocation.requestPermission().subscribeOn(Schedulers.io())
+        locationHelper.requestPermission().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result ->
                 if (result == true) {
@@ -62,7 +78,7 @@ class HomeViewModel(
 
     private fun getLocation() {
         locationStatusLiveData.value = stringResource.gettingLocation()
-        appLocation.getCurrentLocation().subscribeOn(Schedulers.io())
+        locationHelper.getCurrentLocation().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
                 myLocationLiveData.value = result
