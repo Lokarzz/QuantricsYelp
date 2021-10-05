@@ -17,19 +17,23 @@ class BusinessCategoriesAdapter(private val data: ArrayList<Categories>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemBinding = ItemBusinessCategoriesBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+        return ViewHolder(
+            ItemBusinessCategoriesBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-        return ViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val chip = data[position]
-        holder.binding.chip.text = chip.title
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClick(chip)
+        val categories = data[position]
+
+        with(holder.binding) {
+            data = categories
+            root.setOnClickListener {
+                onItemClickListener?.onItemClick(categories)
+            }
         }
     }
 

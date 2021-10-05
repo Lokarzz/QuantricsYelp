@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.lokarz.yelp.databinding.ItemBusinessPhotoBinding
 import com.lokarz.yelp.util.AppListener
 
@@ -34,12 +33,12 @@ class BusinessPhotoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val photo = data[position]
 
-        Glide.with(activity).load(photo)
-            .into(holder.binding.ivPhoto)
+        with(holder.binding) {
+            imageUrl = photo
 
-
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClick(photo)
+            root.setOnClickListener {
+                onItemClickListener?.onItemClick(photo)
+            }
         }
     }
 

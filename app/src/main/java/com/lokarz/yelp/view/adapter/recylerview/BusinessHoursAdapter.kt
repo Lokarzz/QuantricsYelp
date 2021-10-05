@@ -30,16 +30,15 @@ class BusinessHoursAdapter(private val data: ArrayList<Open>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val open = data[position]
-        val context = holder.itemView.context
         val start = DateUtil.to12HourFormat(open.start)
         val end = DateUtil.to12HourFormat(open.end)
 
-        holder.binding.tvDay.text = context.resources.getStringArray(R.array.day_of_week)[open.day]
-
-        holder.binding.tvOperationHours.text = String.format("%s - %s", start, end)
-
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClick(open)
+        with(holder.binding) {
+            day = root.resources.getStringArray(R.array.day_of_week)[open.day]
+            operatingHours = String.format("%s - %s", start, end)
+            root.setOnClickListener {
+                onItemClickListener?.onItemClick(open)
+            }
         }
     }
 

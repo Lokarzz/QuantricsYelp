@@ -1,64 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:elevation="1dp">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+<layout>
+
+    <data>
+        
+        <variable
+            name="data"
+            type="com.lokarz.yelp.model.repository.poko.search.Businesses" />
+
+        <variable
+            name="snippet"
+            type="String" />
+        <variable
+            name="imageUrl"
+            type="String" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="13:9"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_margin="4dp"
+        android:elevation="1dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_name"
-                style="@style/NameStyleRestaurantItem"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{imageUrl}"
+                    app:layout_constraintDimensionRatio="13:9"
+                    android:transitionName="@{imageUrl}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Restaurant Name" />
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    style="@style/NameStyleRestaurantItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:transitionName="@{data.name}"
+                    android:text="@{data.name}" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_description"
-                style="@style/DescriptionStyleRestaurantItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_description"
+                    style="@style/DescriptionStyleRestaurantItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{snippet}" />
 
-            <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/rating_bar"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:max="5" />
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/rating_bar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rating="@{data.rating}"
+                    android:max="5" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>

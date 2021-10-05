@@ -3,10 +3,8 @@ package com.lokarz.yelp.view.adapter.recylerview
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.lokarz.yelp.databinding.ItemRestaurantBinding
 import com.lokarz.yelp.model.repository.poko.search.Businesses
 import com.lokarz.yelp.util.AppListener
@@ -16,7 +14,8 @@ class RestaurantAdapter(private val fragment: Fragment, private val data: ArrayL
     RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     var onBottomReachedListener: AppListener.OnBottomReachedListener? = null
-    var onItemClickListener: AppListener.OnItemViewClickListener<Businesses, ItemRestaurantBinding>? = null
+    var onItemClickListener: AppListener.OnItemViewClickListener<Businesses, ItemRestaurantBinding>? =
+        null
 
     class ViewHolder(val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,28 +32,31 @@ class RestaurantAdapter(private val fragment: Fragment, private val data: ArrayL
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val business = data[position]
 
-        var imageUrl = business.imageUrl
-        if (imageUrl.isEmpty()) {
-            imageUrl = Constant.Image.ITEM_DEFAULT_IMAGE
+        with(holder.binding) {
+            data = business
+            imageUrl = imageUrl(business)
+            snippet = getSnippet(business)
+
+            root.setOnClickListener {
+                onItemClickListener?.onItemViewClick(business, this)
+            }
         }
-        Glide.with(fragment).load(imageUrl)
-            .into(holder.binding.ivImage)
+        triggerBottomReach(position)
+    }
 
-        holder.binding.tvName.text = business.name
-        holder.binding.tvDescription.text = getSnippet(business)
-        holder.binding.ratingBar.rating = business.rating
-
-        ViewCompat.setTransitionName(holder.binding.ivImage, imageUrl)
-        ViewCompat.setTransitionName(holder.binding.tvName, business.name)
-
+    private fun triggerBottomReach(position: Int) {
         if (onBottomReachedListener != null && data.size - 1 == position) {
             onBottomReachedListener?.onBottomReached()
             onBottomReachedListener = null
         }
+    }
 
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemViewClick(business, holder.binding)
+    private fun imageUrl(data: Businesses): String {
+        var imageUrl = data.imageUrl
+        if (imageUrl.isEmpty()) {
+            imageUrl = Constant.Image.ITEM_DEFAULT_IMAGE
         }
+        return imageUrl
     }
 
     private fun getSnippet(data: Businesses): String {

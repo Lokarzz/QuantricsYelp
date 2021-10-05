@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_day"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Mon"/>
+<layout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_operation_hours"
+    <data>
+
+        <variable
+            name="day"
+            type="String" />
+
+        <variable
+            name="operatingHours"
+            type="String" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="9:00 Am - 3:00 Pm"/>
+        android:layout_margin="4dp">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_day"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@{day}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_operation_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{operatingHours}" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

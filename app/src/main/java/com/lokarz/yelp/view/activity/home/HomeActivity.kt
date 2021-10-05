@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {
 
-
     @Inject
     lateinit var homeViewModel: HomeViewModel
 
