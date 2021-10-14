@@ -19,8 +19,8 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("imageUrl")
-    fun loadImage(view: AppCompatImageView, url: String) {
-        Glide.with(view.context).load(url).into(view)
+    @BindingAdapter(value = ["imageUrl", "defaultImage"], requireAll = false)
+    fun loadImage(view: AppCompatImageView, url: String?, defaultImage : String?) {
+        Glide.with(view.context).load(url ?: defaultImage ?: "").into(view)
     }
 }

@@ -4,13 +4,26 @@ import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailRespo
 import com.lokarz.yelp.model.repository.poko.search.SearchResponse
 import io.reactivex.rxjava3.core.Single
 
-class YelpRepository constructor(private val yelpRemoteRepository: YelpRemoteRepository) {
+class YelpRepository constructor(
+    private val yelpRemoteRepository: YelpRemoteRepository,
+    private val yelpLocalRepository: YelpLocalRepository
+) : IYelpRepository {
 
-    fun searchBusiness(map: Map<String, String>): Single<SearchResponse> {
-        return yelpRemoteRepository.searchBusiness(map)
+    override fun onSearchBusiness(map: Map<String, String>): Single<SearchResponse> {
+        return yelpRemoteRepository.onSearchBusiness(map)
     }
 
-    fun getBusinessDetails(id: String): Single<BusinessDetailResponse> {
-        return yelpRemoteRepository.getBusinessDetails(id)
+    override fun onBusinessDetails(id: String): Single<BusinessDetailResponse> {
+        return Single.create {
+            Single.merge(
+                yelpLocalRepository.onBusinessDetails(id),
+                yelpRemoteRepository.onBusinessDetails(id)
+            ).subscribe({ source ->
+                yelpLocalRepository.saveBusinessDetailResponse(source.id, source)
+                it.onSuccess(source)
+            }, { error ->
+                it.onError(error)
+            })
+        }
     }
 }

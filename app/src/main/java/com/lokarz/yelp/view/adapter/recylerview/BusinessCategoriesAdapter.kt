@@ -13,8 +13,7 @@ class BusinessCategoriesAdapter(private val data: ArrayList<Categories>) :
     var onItemClickListener: AppListener.OnItemClickListener<Categories>? = null
 
     class ViewHolder(val binding: ItemBusinessCategoriesBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

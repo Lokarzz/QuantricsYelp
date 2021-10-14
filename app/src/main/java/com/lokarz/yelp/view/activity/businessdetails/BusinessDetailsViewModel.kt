@@ -7,6 +7,7 @@ import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailResponse
 import com.lokarz.yelp.util.StringResource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class BusinessDetailsViewModel(
@@ -14,6 +15,10 @@ class BusinessDetailsViewModel(
     private val stringResource: StringResource
 ) :
     ViewModel() {
+
+    private val compositeDisposable: CompositeDisposable by lazy {
+        CompositeDisposable()
+    }
 
     val businessDetailsLiveData: MutableLiveData<BusinessDetailResponse> by lazy {
         MutableLiveData()
@@ -33,9 +38,18 @@ class BusinessDetailsViewModel(
     val showCategoriesLiveData: MutableLiveData<Boolean> by lazy {
         MutableLiveData()
     }
+    val imageBannerLiveData: MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+    val nameLiveData: MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+
 
     fun getBusinessDetails(id: String) {
-        yelpRepository.getBusinessDetails(id).subscribeOn(Schedulers.io())
+        yelpRepository.onBusinessDetails(id)
+            .doOnSubscribe { compositeDisposable.add(it) }
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { response ->
                 businessDetailsLiveData.value = response
@@ -46,6 +60,15 @@ class BusinessDetailsViewModel(
                 hoursOfOperation()
             }
     }
+
+    fun setBanner(image: String) {
+        imageBannerLiveData.value = image
+    }
+
+    fun setName(name: String) {
+        nameLiveData.value = name
+    }
+
 
     private fun initSnippet() {
         val data = businessDetailsLiveData.value
@@ -81,4 +104,8 @@ class BusinessDetailsViewModel(
         showHoursLiveData.value = openHours != null
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 }

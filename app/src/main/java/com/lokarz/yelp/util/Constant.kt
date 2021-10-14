@@ -29,15 +29,4 @@ class Constant {
             "https://blog.yelp.com/wp-content/uploads/2021/09/Yelp-Burst-600x412.jpg"
     }
 
-    class Error {
-        companion object {
-
-        }
-    }
-
-    class Success {
-        companion object {
-
-        }
-    }
 }

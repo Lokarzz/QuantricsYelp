@@ -2,8 +2,8 @@ package com.lokarz.yelp.dagger.component
 
 import com.lokarz.yelp.MainApplication
 import com.lokarz.yelp.dagger.module.ActivityBuildersModule
+import com.lokarz.yelp.dagger.module.AppModule
 import com.lokarz.yelp.dagger.module.FragmentBuildersModule
-import com.lokarz.yelp.dagger.module.ModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
-        ModelModule::class,
+        AppModule::class,
         ActivityBuildersModule::class,
         FragmentBuildersModule::class]
 )

@@ -3,7 +3,6 @@ package com.lokarz.yelp.view.activity.businessdetails
 import android.os.Bundle
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.lokarz.yelp.databinding.ActivityBusinessDetailsBinding
 import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailResponse
@@ -13,6 +12,10 @@ import com.lokarz.yelp.view.adapter.recylerview.BusinessCategoriesAdapter
 import com.lokarz.yelp.view.adapter.recylerview.BusinessHoursAdapter
 import com.lokarz.yelp.view.adapter.recylerview.BusinessPhotoAdapter
 import com.lokarz.yelp.view.base.BaseActivity
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BusinessDetailsActivity : BaseActivity() {
@@ -33,32 +36,39 @@ class BusinessDetailsActivity : BaseActivity() {
 
         setContentView(binding.root)
 
+        initTransition()
         initBusinessDetailsView()
-
-
     }
 
+    private fun initTransition() {
+        postponeEnterTransition()
+        Single.just(1)
+            .delay(25, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _ ->
+                startPostponedEnterTransition()
+            }
+    }
+
+
     private fun initBusinessDetailsView() {
+        initSharedElements()
         observeBusinessData()
         getBusinessData()
         initNavigation()
-        initSharedElements()
     }
 
     private fun initSharedElements() {
-        postponeEnterTransition()
-
         initBannerElement()
         initNameElement()
-
-        startPostponedEnterTransition()
     }
 
     private fun initNameElement() {
         val name = intent.getStringExtra(Constant.App.NAME)
         name?.let {
             ViewCompat.setTransitionName(binding.tvName, it)
-            binding.tvName.text = it
+            viewModel.setName(it)
         }
     }
 
@@ -66,7 +76,7 @@ class BusinessDetailsActivity : BaseActivity() {
         val imageUrl = intent.getStringExtra(Constant.App.IMAGE_URL)
         imageUrl?.let {
             ViewCompat.setTransitionName(binding.ivBanner, it)
-            loadBannerImage(imageUrl)
+            viewModel.setBanner(it)
         }
     }
 
@@ -78,7 +88,6 @@ class BusinessDetailsActivity : BaseActivity() {
 
     private fun observeBusinessData() {
         viewModel.businessDetailsLiveData.observe(this) {
-            initBusinessData(it)
             initPhotos(it)
             initCategories(it)
             initHoursOfOperation(it.hours)
@@ -92,10 +101,6 @@ class BusinessDetailsActivity : BaseActivity() {
         binding.rvHoursOfOperation.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvHoursOfOperation.adapter = BusinessHoursAdapter(open)
-    }
-
-    private fun initBusinessData(data: BusinessDetailResponse) {
-        loadBannerImage(data.imageUrl)
     }
 
     private fun initPhotos(data: BusinessDetailResponse) {
@@ -115,14 +120,6 @@ class BusinessDetailsActivity : BaseActivity() {
         }
         binding.rvBusinessCategories.layoutManager = FlexboxLayoutManager(this)
         binding.rvBusinessCategories.adapter = BusinessCategoriesAdapter(categories)
-    }
-
-    private fun loadBannerImage(bannerUrl: String) {
-        var image = bannerUrl
-        if (image.isEmpty()) {
-            image = Constant.Image.ITEM_DEFAULT_IMAGE
-        }
-        Glide.with(this).load(image).into(binding.ivBanner)
     }
 
 

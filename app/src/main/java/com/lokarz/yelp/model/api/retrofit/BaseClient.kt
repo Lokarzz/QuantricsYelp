@@ -10,18 +10,29 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-abstract class BaseClient<T>(baseUrl: String, classService: Class<T>) {
-    var service: T
+abstract class BaseClient<T>(private val baseUrl: String, private val classService: Class<T>) {
 
-    init {
-        val mRetrofit = Retrofit.Builder()
+    val service: T by lazy {
+        Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
-        service = mRetrofit.create(classService)
+            .build().create(classService)
     }
+
+//    fun getService(): T? {
+//        if (service == null) {
+//            val mRetrofit = Retrofit.Builder()
+//                .baseUrl(baseUrl)
+//                .client(okHttpClient)
+//                .addConverterFactory(gsonConverterFactory)
+//                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+//                .build()
+//            service = mRetrofit.create(classService)
+//        }
+//        return service
+//    }
 
     private val okHttpClient: OkHttpClient
         get() {

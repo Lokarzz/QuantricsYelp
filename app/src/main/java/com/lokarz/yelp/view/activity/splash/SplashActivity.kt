@@ -22,8 +22,6 @@ class SplashActivity : BaseActivity() {
 
         setContentView(binding.root)
 
-
-
         Single.just(1)
             .delay(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())

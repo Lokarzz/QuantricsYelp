@@ -15,8 +15,7 @@ class BusinessHoursAdapter(private val data: ArrayList<Open>) :
     var onItemClickListener: AppListener.OnItemClickListener<Open>? = null
 
     class ViewHolder(val binding: ItemBusinessHoursBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

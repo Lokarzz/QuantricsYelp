@@ -16,9 +16,7 @@ class BusinessPhotoAdapter(
     var onItemClickListener: AppListener.OnItemClickListener<String>? = null
 
     class ViewHolder(val binding: ItemBusinessPhotoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

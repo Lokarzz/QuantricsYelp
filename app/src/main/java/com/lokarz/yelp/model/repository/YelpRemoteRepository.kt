@@ -5,13 +5,14 @@ import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailRespo
 import com.lokarz.yelp.model.repository.poko.search.SearchResponse
 import io.reactivex.rxjava3.core.Single
 
-class YelpRemoteRepository constructor(private val iYelpService: IYelpService) {
+class YelpRemoteRepository (private val iYelpService: IYelpService) : IYelpRepository {
 
-    fun searchBusiness(map: Map<String, String>): Single<SearchResponse> {
+    override fun onSearchBusiness(map: Map<String, String>): Single<SearchResponse> {
         return iYelpService.searchBusiness(map)
+
     }
 
-    fun getBusinessDetails(id: String): Single<BusinessDetailResponse> {
+    override fun onBusinessDetails(id: String): Single<BusinessDetailResponse> {
         return iYelpService.getBusinessDetails(id)
     }
 }

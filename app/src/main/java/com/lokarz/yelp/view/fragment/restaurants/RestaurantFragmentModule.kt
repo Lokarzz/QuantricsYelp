@@ -16,7 +16,7 @@ class RestaurantFragmentModule : BaseFragmentModule<RestaurantFragment>() {
     @Provides
     fun provideFactory(yelpRepository: YelpRepository) : ViewModelProvider.Factory {
         val splashViewModel = RestaurantViewModel(yelpRepository)
-        return ViewModelProviderFactory(splashViewModel);
+        return ViewModelProviderFactory(splashViewModel)
     }
 
     @Provides

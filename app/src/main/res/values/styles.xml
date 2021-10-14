@@ -1,18 +1,16 @@
 <resources>
-
-
-
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="colorControlNormal">@android:color/black</item>
     </style>
 
-    <style name="AppTheme.Transitions">
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowExitTransition">@transition/explode</item>
+    <style name="BaseTheme.Transitions">
+        <item name="android:windowActivityTransitions">true</item>
+
         <item name="android:windowEnterTransition">@transition/explode</item>
+        <item name="android:windowExitTransition">@transition/explode</item>
 
         <item name="android:windowSharedElementEnterTransition">
             @transition/change_image_transform</item>
@@ -20,7 +18,9 @@
             @transition/change_image_transform</item>
     </style>
 
-    <style name="AppTheme.Transitions.Collapsing">
+    <style name="AppTheme" parent="BaseTheme.Transitions"/>
+
+    <style name="AppTheme.Collapsing">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

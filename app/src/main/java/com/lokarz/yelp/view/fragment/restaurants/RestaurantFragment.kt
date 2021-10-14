@@ -128,7 +128,6 @@ class RestaurantFragment : BaseFragment() {
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.rvRestaurant.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                println("onScroll $dy")
                 homeViewModel.onScrollChange(dy = dy)
             }
         })
@@ -140,8 +139,8 @@ class RestaurantFragment : BaseFragment() {
 
     private fun getOnItemClickListener(): AppListener.OnItemViewClickListener<Businesses, ItemRestaurantBinding> {
         return object : AppListener.OnItemViewClickListener<Businesses, ItemRestaurantBinding> {
-            override fun onItemViewClick(item: Businesses, binding: ItemRestaurantBinding) {
-                toDetailsScreen(item, binding)
+            override fun onItemViewClick(item: Businesses, view: ItemRestaurantBinding) {
+                toDetailsScreen(item, view)
             }
 
         }
@@ -176,6 +175,9 @@ class RestaurantFragment : BaseFragment() {
                     binding.rvRestaurant.layoutManager as StaggeredGridLayoutManager
                 )
 
+            }
+            else -> {
+                // do nothing
             }
         }
     }

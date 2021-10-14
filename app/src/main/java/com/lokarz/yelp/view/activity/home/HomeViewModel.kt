@@ -8,6 +8,7 @@ import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.util.AppEnum
 import com.lokarz.yelp.util.StringResource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 
@@ -17,6 +18,10 @@ class HomeViewModel(
     private val stringResource: StringResource
 ) :
     ViewModel() {
+
+    private val compositeDisposable: CompositeDisposable by lazy {
+        CompositeDisposable()
+    }
 
     val termSearchLiveData: MutableLiveData<String> by lazy {
         MutableLiveData()
@@ -41,10 +46,9 @@ class HomeViewModel(
         MutableLiveData()
     }
 
-    val visibilityRelay : PublishSubject<Boolean> by lazy {
+    val visibilityRelay: PublishSubject<Boolean> by lazy {
         PublishSubject.create()
     }
-
 
 
     fun searchByTerm(text: String) {
@@ -59,13 +63,14 @@ class HomeViewModel(
         filterLiveData.value = map
     }
 
-    fun onScrollChange(dy : Int){
+    fun onScrollChange(dy: Int) {
         val state = if (dy >= 0) AppEnum.ScrollState.UP else AppEnum.ScrollState.DOWN
         filterVisibility.value = AppEnum.ScrollState.UP == state
     }
 
     fun requestLocation() {
         locationHelper.requestPermission().subscribeOn(Schedulers.io())
+            .doOnSubscribe { compositeDisposable.add(it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result ->
                 if (result == true) {
@@ -79,6 +84,7 @@ class HomeViewModel(
     private fun getLocation() {
         locationStatusLiveData.value = stringResource.gettingLocation()
         locationHelper.getCurrentLocation().subscribeOn(Schedulers.io())
+            .doOnSubscribe { compositeDisposable.add(it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
                 myLocationLiveData.value = result
@@ -87,5 +93,10 @@ class HomeViewModel(
             })
     }
 
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 
 }

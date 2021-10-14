@@ -7,12 +7,17 @@ import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.model.repository.poko.search.Businesses
 import com.lokarz.yelp.util.Constant
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class RestaurantViewModel(
     private val yelpRepository: YelpRepository
 ) :
     ViewModel() {
+
+    private val compositeDisposable: CompositeDisposable by lazy {
+        CompositeDisposable()
+    }
 
     val businesses: MutableLiveData<List<Businesses>> by lazy {
         MutableLiveData()
@@ -66,7 +71,8 @@ class RestaurantViewModel(
     fun searchBusiness() {
         initDefaultParams()
         shimmerLiveData.value = true
-        yelpRepository.searchBusiness(searchParams).subscribeOn(Schedulers.io())
+        yelpRepository.onSearchBusiness(searchParams).subscribeOn(Schedulers.io())
+            .doOnSubscribe { compositeDisposable.add(it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { response ->
                 shimmerLiveData.value = false
@@ -89,13 +95,20 @@ class RestaurantViewModel(
     fun businessLoadMore() {
         val offset = searchParams[Constant.Yelp.OFFSET]?.toInt() ?: 0
         searchParams[Constant.Yelp.OFFSET] = (offset + Constant.Yelp.SEARCH_LIMIT).toString()
-        yelpRepository.searchBusiness(searchParams).subscribeOn(Schedulers.io())
+        yelpRepository.onSearchBusiness(searchParams)
+            .doOnSubscribe { compositeDisposable.add(it) }
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { response ->
                 businesses.postValue(response.businesses)
                 bottomReachLiveData.value = response.businesses.size >= Constant.Yelp.SEARCH_LIMIT
             }
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 
 }
