@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.model.repository.poko.businessdetails.BusinessDetailResponse
-import com.lokarz.yelp.util.StringResource
+import com.lokarz.yelp.helper.resource.ResourceHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class BusinessDetailsViewModel(
     private val yelpRepository: YelpRepository,
-    private val stringResource: StringResource
+    private val stringResource: ResourceHelper
 ) :
     ViewModel() {
 

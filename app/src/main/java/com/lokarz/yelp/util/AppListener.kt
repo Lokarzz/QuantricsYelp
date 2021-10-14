@@ -1,6 +1,6 @@
 package com.lokarz.yelp.util
 
-class AppListener {
+object AppListener {
 
     interface OnBottomReachedListener {
         fun onBottomReached()

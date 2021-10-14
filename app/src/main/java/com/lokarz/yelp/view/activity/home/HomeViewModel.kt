@@ -4,9 +4,9 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lokarz.yelp.helper.location.LocationHelper
+import com.lokarz.yelp.helper.resource.ResourceHelper
 import com.lokarz.yelp.model.repository.YelpRepository
 import com.lokarz.yelp.util.AppEnum
-import com.lokarz.yelp.util.StringResource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 class HomeViewModel(
     private val yelpRepository: YelpRepository,
     private val locationHelper: LocationHelper,
-    private val stringResource: StringResource
+    private val stringResource: ResourceHelper
 ) :
     ViewModel() {
 

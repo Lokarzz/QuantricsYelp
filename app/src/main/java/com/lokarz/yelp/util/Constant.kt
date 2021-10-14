@@ -1,6 +1,6 @@
 package com.lokarz.yelp.util
 
-class Constant {
+object Constant {
 
     object App {
         const val BUSINESS_ID = "business_id"

@@ -8,7 +8,7 @@ import com.lokarz.yelp.dagger.factory.ViewModelProviderFactory
 import com.lokarz.yelp.helper.location.LocationHelper
 import com.lokarz.yelp.helper.permission.PermissionHelper
 import com.lokarz.yelp.model.repository.YelpRepository
-import com.lokarz.yelp.util.StringResource
+import com.lokarz.yelp.helper.resource.ResourceHelper
 import com.lokarz.yelp.view.base.BaseActivityModule
 import dagger.Module
 import dagger.Provides
@@ -33,7 +33,7 @@ class HomeActivityModule : BaseActivityModule<HomeActivity>() {
     fun provideFactory(
         yelpRepository: YelpRepository,
         locationHelper: LocationHelper,
-        stringResource: StringResource,
+        stringResource: ResourceHelper,
     ): ViewModelProvider.Factory {
         val homeViewModel = HomeViewModel(yelpRepository, locationHelper, stringResource)
         return ViewModelProviderFactory(homeViewModel)

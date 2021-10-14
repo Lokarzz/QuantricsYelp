@@ -1,9 +1,9 @@
-package com.lokarz.yelp.util
+package com.lokarz.yelp.helper.resource
 
 import android.content.Context
 import com.lokarz.yelp.R
 
-class StringResource(private var context: Context) {
+class ResourceHelper(private var context: Context) {
 
 
     fun getClaimText(claimed: Boolean): String {
