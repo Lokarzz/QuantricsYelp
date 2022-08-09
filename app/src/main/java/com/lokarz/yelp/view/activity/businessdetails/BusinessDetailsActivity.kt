@@ -43,7 +43,7 @@ class BusinessDetailsActivity : BaseActivity() {
     private fun initTransition() {
         postponeEnterTransition()
         Single.just(1)
-            .delay(25, TimeUnit.MILLISECONDS)
+            .delay(50, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { _ ->

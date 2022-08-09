@@ -20,9 +20,9 @@ class CryptographyHelper(val context: Application) {
     private var keysResponse: AppKeysResponse? = null
 
     val masterKey : MasterKey by lazy {
-        MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
+            MasterKey.Builder(context)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build()
     }
 
     init {
